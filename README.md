@@ -1,21 +1,26 @@
 # PJ-00 Chronicles
 
-## 角色
+最後更新：2026-05-25 17:03
 
-PJ-00 Chronicles 是 Session Log 的非 bridge 歷史保留與 cutover 預備區，不是 GitHub 發佈 repo，也不是目前 day-side active log 的強制寫入點。
+## Objective
 
-## 2026-05-11 現場定錨
+- 管理 `D:\Project\PJ-00_Chronicles` 下的 Session Log 與正式報告產物。
+- 本 repo 是 Chronicles / reports 工作區，不作 bridge repo 或對外發佈用途。
 
-- `D:\PersonalOS\scripts\Append-SessionNode.ps1` 目前只允許包含 `chat`、`chatHistory` 或 `projects` 的路徑，並會拒絕 `github-bridge`。
-- 因此 `PJ-00_Chronicles\chat\` 被建立為未來可用的安全 target，但 day-side active Session Log 暫時仍維持在 `D:\PersonalOS\projects\PJ-14_twin-sync-bridge\chat\`。
-- 未經 helper、Harness 與法典引用同步 cutover 前，不得盲目搬移同日 active log。
+## Topology
 
-## 現況
+- `chat/`：Session Log 與歷史紀錄。
+- `reports/`：一頁式報告與索引。
+- `README.md`：專案總覽。
+- `NEXT_STEPS.md`：立即行動與已完成事項。
 
-- `chat/`：future active / archive target
-- `chat/archive/`：預留給跨日或已完成切換契約後的歷史 log
-- `chat/20260515_Twin-Sync_AI_Sessions.snapshot.md`：2026-05-15 目錄整併時建立的本地 snapshot mirror；active write path 仍以 `D:\PersonalOS\projects\PJ-14_twin-sync-bridge\chat\` 為準
+## Index
 
-## 備註
+- 最新報告：`reports/20260525_monthly_onepager_2026-05.md`
+- 報告索引：`reports/INDEX.md`
 
-本目錄目前只完成結構預備與真相定錨，尚未進行歷史 Session Log 批次搬遷。
+## Constraints
+
+- Session Log 授權路徑以 `D:\Project\PJ-00_Chronicles\chat\` 為準。
+- 文件封裝採 path-scoped stage / commit，不得捲入無關 dirty worktree。
+- 報告輸出以主管可讀、可列印、可轉 PPT 為優先。
