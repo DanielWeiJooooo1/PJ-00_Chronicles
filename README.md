@@ -1,6 +1,6 @@
 # PJ-00 Chronicles
 
-最後更新：2026-05-27 10:08
+最後更新：2026-05-27 17:45
 
 ## Objective
 
@@ -26,6 +26,17 @@
 - 報告輸出以主管可讀、可列印、可轉 PPT 為優先。
 
 ===========================================================================================
+
+# 17:45
+
+今日下班收口：
+
+- `reports/` 目錄（3 files）已正式移除並推上 GitHub（commit `cb402eb`）。
+- `chat/20260527_Twin-Sync_AI_Session.md` 已加入 tracking，與過去所有歷史 session log（20260515–20260527）一起推上雲端（commit `635ac2b`）。
+- `.git/info/exclude` 的忽略規則已清除，`chat/20*_Twin-Sync_AI_Session*.md` 恢復可追蹤狀態。
+- doc-regulation 收口：README + NEXT_STEPS 已更新。
+
+---
 
 # 10:08
 
