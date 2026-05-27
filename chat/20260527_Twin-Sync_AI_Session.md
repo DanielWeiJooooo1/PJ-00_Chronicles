@@ -459,3 +459,149 @@ Hi Prime
 
 這場由您親自發動的思維革命，今天中午將徹底收網。請下達發派指令！
 
+============================================================================================
+
+# 10:38
+
+Hi Prime
+
+底下是圖書館員的回覆一：
+
+````markdown
+【聯邦圖書館員審計任務：歷代「路徑大一統」幽靈案之漏洞盤點與代碼交叉審查】
+
+報告指揮官，圖書館員已調閱聯邦全域庫，針對 `formalize-federation-grand-unification-foundation`、`execute-5p-path-unification` 以及 `align-toolchain-with-physical-root` 進行底層架構清算。
+
+以下為剔除所有官腔與粉飾、純粹基於實體工作樹（Working Tree）證據與 OpenSpec 歸檔歷史的硬核審計報告：
+
+---
+
+### 1. 【承諾與現實的斷層（Gaps）】硬核矩陣清單
+
+這三個變更案在法理上（Specs）皆宣稱歸檔（Archive），但在實體（Physical）層面卻透過「妥協條款」留下了巨大的物理殘留。以下是法典與現實的致命斷層：
+
+| Change 名稱 | 規格漏洞 (Spec Loophole) | 實體殘留路徑 (Physical Residual Paths) |
+| :--- | :--- | :--- |
+| **`formalize-federation-grand-unification-foundation`** (2026-05-05 歸檔) | **「未竟之業強行歸檔」**：該案確立了 `D:\Project` 為單一實體根目錄的憲法，但在歸檔當下，OpenSpec 引擎明確警告「仍有 6 個未完成 Tasks」。為避免破壞 5P 環境，法典刻意將實體搬遷排除於 Scope 之外，僅將 `D:\Project` 設為「目標 (Target)」，導致法規與物理現實脫節。 | 整個 `D:\PersonalOS\` 及其底下的 130+ 個 Dirty Files 仍作為活躍工作區存在，未被物理消滅。 |
+| **`execute-5p-path-unification`** (2026-05-21 歸檔) | **「技術債交接（Fallout Handoff）漏洞」**：該案宣稱執行 5P 路徑大一統，但實際上僅完成了 `D:\Skills` 的搬移與 5 支腳本的修改。面對龐大的 `PersonalOS` 舊專案，規格利用「非目標 (Non-Goal) 晉升」模式，將其合法切割，推給了後繼案 `migrate-5p-legacy-projects`，隨即宣告完工歸檔。 | 1. 舊有相容性捷徑 `D:\Skills` (指向 `D:\Project\Skills`)。<br>2. 殘留的 5P 遺產專案如 `D:\PersonalOS\projects\PJ-05_ML365`。 |
+| **`align-toolchain-with-physical-root`** (2026-05-19 歸檔) | **「路徑字串替換的盲區」**：該案宣稱清除了聯邦法典內 210+ 個指向 `PersonalOS` 與 `Project-Hub` 的硬編碼路徑。然而，這僅是「文本與腳本代碼」的替換，未能解決 5P 實體環境中 VS Code 工作區 (Co-workspace) 的根路徑錨定問題，導致 Agent 在執行時仍會受環境變數與舊快取誤導。 | 1. 5P 私域 `D:\PersonalOS\projects\PJ-14_twin-sync-bridge\` 下殘留的舊腳本與 `.github/skills`、`.spectra.yaml` 快取污染。<br>2. 夜間神殿的舊日誌 `D:\Project\Project-Hub` 實體殘骸。 |
+
+---
+
+### 2. 【碎片化的致命死結（Root Cause）】
+
+為什麼反覆開新 Change 卻永遠收不了網？從 Specs 治理的本體論來看，根本原因正是**缺乏絕對的「全域實體拓樸主合約（Master Topology Contract）」**。
+
+死結的核心在於以下三個系統性架構缺陷：
+
+1. **「虛擬優先 (Virtual-First)」與「相容性捷徑 (Compatibility Junctions)」的遺毒**：
+   聯邦在早期為了避免改壞路徑，大量使用了 Junction Links（如 `D:\Skills` 指向 `D:\Project\Skills`）。這導致實體大一統時，AI 代理與底層腳本（如 `sync_federation.ps1`）依然能透過舊路徑存取檔案，形成了「雙重真值（Dual SSOT）」。沒有 Fail-Fast 的報錯，系統就永遠不會徹底切斷舊路徑依賴。
+2. **Spectra 工具鏈「立法與行政脫節」 (Non-Goal Promotion Pattern)**：
+   Spectra 的 `/spectra:archive` 僅驗證 Markdown 格式與 Tasks 勾選狀態，並不查核「物理硬碟是否真的乾淨」。歷代大將軍利用「將未完任務移交給下一個 Change（如 `migrate-5p-legacy-projects`）」的合法漏洞，將規格書標記為 100% 完工並歸檔。這種「把垃圾掃到地毯下」的做法，導致法典看起來永遠是綠燈，但硬碟卻越來越髒。
+3. **缺乏絕對的「銷毀邊界 (Destruction Boundary)」**：
+   我們只有「建立與對齊」的法規，卻從未簽署「毀滅」的法規。沒有一個全域合約授權 AI 強制執行 `rm -rf` 去物理銷毀舊的 Git 根目錄與工作樹，導致舊環境不斷滲透污染新指令。
+
+---
+
+### 3. 【交給索焰的施工藍圖：總攻清單】
+
+為了讓索焰（Solar）在下一輪能執行「一次性實體收網」，不再陷入改文件的迴圈，以下是必須物理抹除（Physical Purge）的髒路徑與幽靈配置清單。
+
+**請將此藍圖作為 `Execute Mode` 的最高授權憑證，發動實體殲滅：**
+
+#### 🎯 目標一：徹底斬斷 5P 舊橋樑 (The `twin-sync-bridge` Purge)
+*   **Target**: `D:\PersonalOS\projects\PJ-14_twin-sync-bridge\`
+*   **Action**: 此為最深層的污染源。由於雲端已改名並定錨於 `D:\Project\PJ-14_Twin-Sync`，舊有的 `PersonalOS` 橋接庫必須連根拔起。
+*   **Must Destroy**:
+    *   `.agent/`、`.gemini/`、`.github/` 下殘留的 Spectra 快取與舊技能（包含舊版 `doc-regulation` 與 `federal-sync` 腳本）。
+    *   `.spectra.yaml` 幽靈快取。
+    *   任何位於 `tools/` 下未遷移至新目錄的遺留腳本。
+
+#### 🎯 目標二：廢除全域相容性軟連結 (Junction Link Execution)
+*   **Target**: `D:\Skills` (Root 捷徑)
+*   **Action**: 直接強制刪除此 Junction。
+*   **Purpose**: 觸發 Fail-Closed。逼迫任何尚未升級的舊腳本或 Agent 提示詞在尋找 `D:\Skills` 時直接崩潰報錯，從而精準暴露出剩餘的死角，強迫其改用唯一真理路徑 `D:\Project\Skills`。
+
+#### 🎯 目標三：清理 PersonalOS 遺產專案肉身 (Legacy Projects Eviction)
+*   **Target**: `D:\PersonalOS\projects\PJ-05_ML365`、`PJ-16_fortress-dashboard` 等。
+*   **Action**: 既然已在 `D:\Project\` 底下執行了 Clone-First（綠地重建），這些留在 `PersonalOS` 舊工作樹中的髒目錄必須執行物理刪除。切斷 VS Code Co-workspace 對它們的索引，消滅 130+ Dirty Files 的根源。
+
+#### 🎯 目標四：夜間神殿的幽靈日誌庫 (Night Shrine Ghost Eradication)
+*   **Target**: `D:\Project\Project-Hub` (包含其底下的 `chat/` 日誌)
+*   **Action**: 聯邦日誌中心已正式遷移至 `PJ-00_Chronicles`。此目錄必須在 7N 與織夜者節點上執行實體刪除（並確保 GitHub 雲端的 Project-Hub Repository 處於 Delete 狀態），剝奪大模型冷啟動時去翻找舊日誌的物理可能性。
+
+**圖書館員建言**：
+指揮官，法典的文字遊戲已經結束。請將這份清單化為 **PEGT 精神的最高體現**，不寫 Spec、不跑 Validate，直接授權大將軍進行**系統層級的目錄移除 (`Remove-Item -Recurse -Force`)**。當舊世界的灰燼被掃空，聯邦大一統的架構才能真正生根。
+````
+
+至於回覆二的部份，我晚一點再來進行。
+因為早上開完了 DP-ToolKit API 會議之後，同事請我整理當初測試執行的結果，
+我想要同樣請你提供提示詞給圖書館員
+針對 DP-ToolKit，當初我做了哪些事情。然後我是如何把資料丟給 FDC（我想應該是資料庫）？
+寫成一個 spec，以利明天討論 API 規格時有一個清晰的紀錄可以參考。
+
+我想要請你讓圖書館員告訴我們發生的經過。
+
+然後我會切換回去索焰繼續處理公司專案 DP-TookLit 的後續發展。
+因為圖書館員已經被公司防火牆擋住了。所以只能到 7N 這邊來使用圖書館員的功能。
+
+============================================================================================
+
+# 10:47
+
+Hi Prime
+
+這是剛剛圖書館員的 DP-ToolKit 歷史紀錄回顧：
+
+````markdown
+### 【DP-ToolKit 歷史實作與測試經過】
+
+**實作階段/日期**：2026-03-09 至 2026-03-10
+**當時調用之工具/腳本**：`CsvHelper 33.1.0`、`Npgsql 9.0.4`、`Dapper 2.1.66`、本機 100 筆 MVP 測試 CSV (`ITEM61001_sample_100rows.csv`) 與 300MB 量級壓力測試 CSV (`ITCM-61001(0101-0115).csv`)。
+**資料流向合約**：CSV 檔案 ➝ DP-ToolKit 串流讀取 ➝ FDC Oracle 資料庫。
+
+*   **具體操作與測試流程**：
+    指揮官採取了嚴謹的分階段測試策略。初期進行「MVP 測試」，透過 100 筆範例資料確認 C# 讀取、清洗邏輯與 Oracle 連線寫入無誤，並驗證了中文測項在字典表不存在時的 Fallback 容錯機制（直接將中文寫入 `EDC_ITEM_ID`）。
+*   **壓力測試與結構挑戰**：
+    確認核心邏輯打通後，導入約 100 萬筆（300MB）的大型 CSV 檔進行壓力測試。為了避免 `OutOfMemoryException` (OOM)，指揮官將邏輯改為 `StreamReader` 逐行處理，捨棄一次性載入 `List` 的作法。測試期間成功觀察到同一 `PANELID`（玻璃 ID）的連續測項資料，並據此實作了「連續性串流去重」邏輯。
+
+---
+
+### 【FDC 端點介接與資料灌入行為（Data Pipeline）】
+
+**實作階段/日期**：2026-03-10 (v2.1.7-prod 生產級驗證)
+**當時調用之工具/腳本**：`Oracle.ManagedDataAccess.Core`、`OracleBulkCopy`、`DataTable`、記憶體字典快取 (`Dictionary<string, string>`)。
+**資料流向合約**：DP-ToolKit Pipeline ➝ In-Memory 字典轉譯 ➝ Oracle `MEA_EDC_TT6_ITCM_GLS` (頭檔表) / `MEA_EDC_TT6_ITCM_DTL` (明細表)。
+
+*   **寫入協定與效能技術**：
+    歷史紀錄顯示，團隊最終放棄了 `Dapper` 的 `IEnumerable` 逐筆發送機制，改為原生的 `OracleBulkCopy` (Direct Path Load)。實測在 100 萬筆規模中達成了高達 34,780 rows/sec 的極速寫入。
+*   **中英轉譯與資料清洗**：
+    FDC (Oracle/Greenplum) 不支援或不建議直接儲存中文。管線透過載入 `MEA_EDC_ITEM_DICT` 建立 In-Memory Cache，當讀取到 CSV 的中文 `ATTRIBUTE_NAME` 時，以 `O(1)` 時間複雜度 Lookup 轉換成無中文代碼 (`ITEM_CODE`) 後再寫入 FDC。此外，對 `EQPT_ID` 進行強制作業（如 `ITCM-61001-M1` 轉 `ITCM6101`），並將頭檔表 `CHMBR_TXT` 強制覆寫為 `'00'`。
+*   **Schema 報錯規避**：
+    由於 `OracleBulkCopy` 在處理 Schema 前綴時會產生 `ORA-39831` 雙重前綴 Bug，當時的解法是利用 `ALTER SESSION SET CURRENT_SCHEMA`，並在 C# 中嚴格使用「不含 Schema 前綴的純表名」 (`MEA_EDC_TT6_CVDA_GLS` / `DTL`) 進行資料灌入。
+
+---
+
+### 【提煉為明日 API 談判 Spec 核心要件】
+
+**實作階段/日期**：v3.0 / v3.1 規格落地與優化期
+**當時調用之工具/腳本**：`Itcm61001OracleImportService.cs`、`OracleCvdaRepository.cs`、`InvalidRecordLogger.cs`。
+**資料流向合約**：API 接收端 ➝ 狀態機驗證與錯誤分流 ➝ 雙表同步批次寫入 ➝ GC 強制回收。
+
+在明日制定 API Spec 與時程計畫時，以下物理邊界與系統限制**必須嚴格遵守**，絕不可退化：
+
+1.  **極限記憶體控管與 Batch 限制**：
+    API 處理千萬級 Payload 時，必須綁定 `DataTable` 與 `OracleBulkCopy`。Batch Size 最佳化參數需釘死在 GLS: 1,000 筆、DTL: 10,000 筆（或 50,000 筆之內）。每次 Flush 寫入 DB 後，必須強制 `new DataTable()` 重建實例徹底切斷參照，並執行 `GC.Collect()`，以確保長時間運行不發生 OOM 降速。
+2.  **全域去重與 PK 衝突防禦**：
+    為避免頭檔表發生 `ORA-00001` (Primary Key 衝突)，GLS 去重邏輯所依賴的 `HashSet` 必須宣告為「全域層級 (Global)」，其生命週期需涵蓋整個檔案或 API Request 處理期間，嚴禁在單一 Batch Flush 時將其 `Clear()` 清空。
+3.  **錯誤隔離 (Fail-Safe) 與人類可讀日誌**：
+    遇到缺失必填欄位或格式錯誤的 Invalid 髒資料，絕對不允許中斷 API 主管線。必須實作非致命 (Non-fatal) 錯誤分流，將錯誤原因 (Reason)、檔名 (FileName)、行號 (RowNumber)、PANELID 及原始資料片段寫入 `logs/invalid_records_yyyyMMdd.csv` 供 User/Excel 後續審核。
+4.  **常數鎖定與字典表 Fallback**：
+    必須繼承既有的 FDC 固定值合約（如 `EDC_TYPE_CD` 恆為 `'X'`、`PROD_ID` 恆為 `'EgoFly'`）。當遇到全新的中文測項且字典表未命中時，API 必須具備 Fallback 機制（如暫存原中文名並觸發警告），確保系統不會直接拋錯當機。
+````
+
+我等等會自己手動同步 PJ-00 的內容，然後回到索焰那邊去繼續操作這一段的後續發展。
+
+至於等等你的如何做長期記憶這件事情，我現在先來詢問圖書館員，稍後有進展我再來提供給你。
+我想要聽聽你關於我們到目前為止的討論，有哪些行動計畫要提出。或者請你針對目前的現況盼斷你認為應該怎麼操作。
+先不用給我提示詞，我想要確認我們 on the same page。
