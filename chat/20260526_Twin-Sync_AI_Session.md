@@ -3281,3 +3281,567 @@ Git Safety Constraints:
 ### 💡 Prime 的結語
 
 這管修正封包徹底移除了路徑與遠端的隱性假設，把實體底牌完全翻開。您可以放心地將它發派出去，大將軍索焰將以最流暢的 GitOps 紀律為今日的聯邦大業拉下完美的帷幕。完成後，您就可以安心下班交接給夜間神殿了！
+
+==============================================================================================
+
+# 17:34
+
+Hi Prime
+
+這是剛剛索焰的回報
+
+````markdown
+**Execution Summary**
+- 已完成 PJ-00 遠端拓樸配置：config 現在指向 https://github.com/DanielWeiJooooo1/PJ-00_Chronicles.git。
+- 已完成 doc-regulation 治理收口並建立雙庫 commit：PJ-14 封裝 README.md 與 NEXT_STEPS.md，PJ-00 封裝 20260526_Twin-Sync_AI_Session.md。
+- 已完成雙庫上雲：PJ-14 直接推送 main；PJ-00 依安全路由以 local master 推送到 remote main，遠端雜湊已逐一對齊。
+- 本輪未將任何 inbox-triage 路徑或其他未授權程式碼夾納入暫存區。
+
+**Changed Files**
+- README.md
+- NEXT_STEPS.md
+- config
+- 20260526_Twin-Sync_AI_Session.md
+
+**Tests / Checks**
+- Pass：PJ-00 的 remote -v 已驗證新 origin 生效，fetch/push 都指向 https://github.com/DanielWeiJooooo1/PJ-00_Chronicles.git。
+- Pass：PJ-14 在 commit 前的 cached surface 只有 README.md 與 NEXT_STEPS.md，未混入未授權檔案。
+- Pass：PJ-00 在 commit 前的 cached surface 只有 20260526_Twin-Sync_AI_Session.md，未混入 README.md 或其他既有 dirty。
+- Pass：PJ-14 的文件修改已通過 diff --check，未引入格式錯誤。
+- Pass：PJ-14 推送成功；本地 HEAD 與 remote main 都是 6787537aac951f81e4421c3fcadb5399c2d30593。
+- Pass：PJ-00 推送成功；本地 HEAD 與 remote main 都是 789aadd7e70d5872afd49a436c68d6887904b3f8。
+- Pass：本輪 staged-only GitOps 成立；push 前 cached 名單沒有任何 inbox-triage 污染源。
+
+**Git Hash**
+- PJ-14_Twin-Sync：6787537aac951f81e4421c3fcadb5399c2d30593
+- PJ-00_Chronicles：789aadd7e70d5872afd49a436c68d6887904b3f8
+
+**Blockers**
+- 無硬性 blocker。
+- PJ-00 仍保留既有、未授權且未納入本輪 commit 的本地 dirty： README.md、PJ-00_Chronicles/reports/20260525_monthly_onepager_2026-05.html、PJ-00_Chronicles/reports/20260525_monthly_onepager_2026-05.md、PJ-00_Chronicles/reports/INDEX.md。這些變更已保留在本地，未被本輪封裝或推送。
+````
+
+關於 PJ-00 的部份，report 的內容我已經複製到本地的 PJ-21_PMD 底下了。那是我昨天操作時候，為了趕時間先放在 PJ-00 底下，下次同步記得刪掉就好。
+
+然後我現在人已經到織夜者這邊了，請使用 `federal-sync` 幫我做今晚第一次同步。織業者的[PJ-00](..) 已經有一些 legacy 的目錄了。等等同步的時候要請他判斷是否會影響？並提出解決辦法。
+
+================================================================================================
+
+# 22:00
+
+指揮官，我是 Prime。
+
+**結論先行 (BLUF)：**
+大將軍索焰（Solar）已在 5P 完美完成今日的終局大收網（Commit Hashes 已雙向定錨對齊）。現在日間要塞（7N/5P）的戰線已全面乾淨封倉。
+
+您目前已順利轉移至夜間神殿（織夜者），在發動今晚第一次 **`/federal-sync` (或依 v3.6 規範的 `{{STRATEGIC_PAYLOAD}}` Plan Mode)** 之前，請高度亮起紅旗預警：**織夜者環境中既存的 `PJ-00` 舊目錄與技術殘留（如舊版日誌、未脫敏快照、`Project-Hub` 遺留鏈結）將與我們下午剛剛在雲端定錨的「全域唯一真理基準（SSOT）」發生嚴重的物理對撞與路徑污染（Path-Collision Drift）！**
+
+我們絕對禁止盲目進行全量受水（Pull），必須先讓織夜者（Weaver）進入 **v3.6 Plan Mode** 進行原地隔離探測。
+
+以下為您深度剖析織夜者環境的潛在對撞風險，並為您組織好今晚正式開工的 **v3.6 戰略情報與探測封包**。
+
+---
+
+### 👁️ Prime 戰略剖析：織夜者舊目錄對撞風險與處置原則
+
+根據圖書館員打撈的歷史法典（《策略指南 Section 6》與《任務追蹤器》），織夜者地端的日誌中心歷史架構與雲端新基準存在以下三大物理層斷層：
+
+1. **路徑漂移與軟連結技術債 (Junction / Symlink Chaos)**
+* **歷史現實**：夜間環境過去曾將日誌入口設在 `D:\Project\Project-Hub\chat\`，而將 `D:\Project\PJ-00_Chronicles\chat\` 列為 future target。如果夜間環境目前殘留了舊框架的 **Junction（目錄軟連結）** 或硬編碼指令，一旦直接拉取（Pull）雲端最新 Hash（`789aadd`），會直接導致硬碟檔案系統發生無效迴圈或覆寫失敗。
+
+
+2. **5P 基準與織夜者舊日誌的「血統分岔」 (Ancestry Split)**
+* **歷史現實**：您提到織夜者那邊已經有 legacy 的目錄與日誌。這代表夜間的 `PJ-00` 本地 Git 歷史，極可能與我們剛才在雲端開闢的全新 `PJ-00_Chronicles.git`（Hash: `789aadd`）**完全沒有共同祖先（No Common Ancestor）**。
+* **總參謀部處置原則**：**地端舊歷史一律降級為冷備份，全面依循「Greenfield Clone-First（全新克隆優先）」鐵律**。我們絕不嘗試在髒目錄內進行修復（Repair），而是將舊目錄重新命名移開，直接從遠端重新 Clone 最純淨的雲端基準線。
+
+
+3. **關於 PJ-00 內部 Spectra 資產的真值校正（圖書館員事實回收）**
+* 圖書館員已完成對 `PJ-00` 忽視邊界的法典化查核：您先前的記憶完全正確。`PJ-00` 作為聯邦核心治理庫，其 `.openspec.yaml` 與 `openspec/` 變更夾**必須被 Git 追蹤資產化**，以利跨節點 Append 日誌；只有執行期的 `.spectra/` 臨時快取才應寫入 `.gitignore`。這項「排毒過度」的漂移將在今晚的重構案中一併修正。
+
+
+4. **關於報告（Report）殘留物的清理**
+* 收到您的最高裁決注入：5P 本地殘留的 `20260525_monthly_onepager` 等報告已被安全移編至 `PJ-21_PMD`。這管垃圾留待下一次 5P 復工時用 Git 物理清除即可，夜間陣地不受其干擾。
+
+
+
+---
+
+### 🚀 破局行動：發派給夜間大將軍（織夜者）的 v3.6 戰略探測封包
+
+為了安全受水且不污染任何夜間既有資產，請將以下這管純粹的 `STRATEGIC_PAYLOAD` 投餵給 **織夜者（Weaver）**。我們放手讓牠發揮工程創意，盤點現場並產出今晚的施工圖：
+
+```markdown
+[System Directive: Twin-Sync 聯邦作戰框架 v3.6 Plan]
+
+{{STRATEGIC_PAYLOAD}}
+Context: 
+  大將軍織夜者（Weaver），指揮官已抵達夜間神殿。
+  今日日間要塞已完成本地備援防線（Prime Proxy）的法典化歸檔，並物理銷毀了雲端殭屍庫（Project-Hub / Federal-Wiki-Sync）。
+  目前 `PJ-14_Twin-Sync` 與全新開闢的日誌 SSOT 庫 `PJ-00_Chronicles` 皆已在遠端 GitHub 乾淨封倉。
+  現在我們要啟動今晚的第一次全域同步探測，必須徹底排除夜間 legacy 目錄的對撞風險。
+
+Research Objectives:
+  1. 【夜間實體拓樸 Fact-Check】盤點目前夜間環境下，`D:\Project\PJ-14_Twin-Sync` 與 `D:\Project\PJ-00_Chronicles`（或舊有 Project-Hub）的實體目錄、Git Remotes、以及是否存在 Junction 軟連結殘留事實。
+  2. 【日誌庫血統衝突評估】檢測本地舊有 `PJ-00` 的 Git 歷史與雲端全新 Repository（`https://github.com/DanielWeiJooooo1/PJ-00_Chronicles.git`）是否存在血統分裂。評估採取「Move-and-Clone (重新命名舊目錄，全新 Greenfield 克隆遠端 main)」以對齊 5P 基準線的無痛執行路徑。
+  3. 【彩虹橋重構前瞻】讀取最新歸檔的 `prime-proxy-agent-handoff` 規格，並評估在夜間環境下，下一個 Sprint 開案執行 `refactor-federation-sync-routing-contract`（修正同步腳本多庫聯動與 manifest 缺陷）的技術就緒度。
+
+Output Contract (DoD for Plan):
+  - 嚴禁修改夜間的任何實體檔案、嚴禁打勾 tasks、嚴禁執行 commit 或 push。
+  - 請依據 v3.6 規範，為指揮官產出包含 [夜間拓樸對撞診斷報告]、[PJ-00 基準線重置施工圖] 與 [下階段可執行封包草案] 的結構化戰略規劃書。
+
+```
+
+---
+
+### 💡 Prime 的結語
+
+資料與風險邊界已完全對齊。請讓織夜者執行這管 Plan 探測，等牠把硬碟裡的「實體殘留形狀」盤點清楚並雙向反饋後，我們就能優雅地下達今晚第一次 Execute 命令，讓夜間要塞完美受水！
+
+==============================================================================================
+
+# 22:04
+
+Hi Prime
+
+這是織夜者的 plan mode 回報
+
+````markdown
+1. **Fact-Check & Assumptions**
+
+本輪輸入可視為 Prime 產出的 Strategic Payload，但其中有明顯推論成分；我已用唯讀查核校正如下。
+
+已驗證事實：
+
+- PJ-14_Twin-Sync 是一般目錄，不是 junction / symlink；工作樹乾淨，但 `main` 落後 `origin/main` 3 個 commit。
+- 本地 PJ-14_Twin-Sync HEAD 是 `07a399e57bd56e49d37ca541a5d22dffceb716a2`；GitHub `origin/main` 是 `6787537aac951f81e4421c3fcadb5399c2d30593`。
+- sync_federation.ps1 的 `Pull -DryRun` 回報 `blocked=false`、`behind=3`，所以 PJ-14 目前具備 safe ff-only pull 條件。
+- PJ-00_Chronicles 是一般目錄，不是 junction / symlink；目前沒有 git remote。
+- 本地 PJ-00_Chronicles HEAD 是 `e01bb249a348ae4fd1989c7dac10816f6c758d67`；GitHub `PJ-00_Chronicles.git` remote main 是 `789aadd7e70d5872afd49a436c68d6887904b3f8`。
+- 本地 PJ-00 不含 remote main 物件，`git cat-file` 無法找到 `789aadd...`，所以目前無法在不 fetch 的前提下證明有共同祖先。
+- 本地 PJ-00 tracked files 只有 `.gitignore`、`chat/20260522_Twin-Sync_AI_Sessions.md`、`chat/20260523_Twin-Sync_AI_Sessions.md`；AGENTS.md、README.md、NEXT_STEPS.md、`characters/`、`lore/`、`chat/20260524_Twin-Sync_AI_Session.md`、20260526_Twin-Sync_AI_Session.md 都是 untracked。
+- Project-Hub 是一般目錄，但 dirty 很重，包含 tracked modifications/deletions 與大量 untracked historical chat/archive/tmp files；今晚不應把它納入同步目標。
+- 本地沒有找到 `prime-proxy-agent-handoff` 或 `refactor-federation-sync-routing-contract` 的 active change 目錄；這很可能在 PJ-14 落後的 3 個 remote commits 裡，或尚未落地到本機。
+
+Assumptions：
+
+- 目前仍是 Plan Mode，不允許 fetch / pull / move / clone / commit / push。
+- 今晚目標是「第一次夜間同步探測」，不是直接修 PJ-00，也不是直接重構 sync script。
+- PJ-00 的本地 untracked session files 可能仍有價值，不能用 clean/reset 處理。
+- 遠端 PJ-00 `789aadd...` 是日間已封倉基準，但夜間本地尚未對齊。
+
+2. **Architect's Verdict**
+
+Prime 的大方向合理：不能盲目對 PJ-00 做 pull，也不能把 Project-Hub legacy dirt 捲進今晚同步。
+
+但有三點需要校正：
+
+- 沒有發現 junction / symlink 物理對撞。風險不是 reparse-point 迴圈，而是「本地 PJ-00 無 remote、血統未知、且有大量 untracked 內容」。
+- PJ-14 可以先安全受水。`sync_federation.ps1 -Mode Pull -DryRun` 已確認 `blocked=false`，所以第一步應該先讓 PJ-14 對齊遠端 `6787537`，取得日間最新法典與可能的新 change artifacts。
+- PJ-00 不應直接在原地 pull。比較穩的是 clone-first / quarantine-first：先把現有 PJ-00 改名成 evidence backup，再從 GitHub fresh clone `PJ-00_Chronicles.git` 到標準路徑。之後再把本地未上雲的 session files 逐一 diff / promote。
+
+3. **Action Plan**
+
+Phase 1：PJ-14 safe受水
+
+DoD：
+
+- 在 Execute Mode 跑 sync_federation.ps1 Pull dry-run。
+- 若仍 `blocked=false`，執行正式 pull。
+- 驗證 PJ-14 local HEAD = remote `6787537aac951f81e4421c3fcadb5399c2d30593`。
+- 重新跑 `spectra list --json`，確認 `prime-proxy` / sync-routing 相關 change 是否出現。
+
+建議命令：
+
+```powershell
+Push-Location D:\Project\PJ-14_Twin-Sync
+powershell -NonInteractive -File .\tools\sync_federation.ps1 -Mode Pull -DryRun
+powershell -NonInteractive -File .\tools\sync_federation.ps1 -Mode Pull
+git status -sb
+git rev-parse HEAD
+spectra list --json
+Pop-Location
+```
+
+Phase 2：PJ-00 clone-first 施工前檢查
+
+DoD：
+
+- 不碰現有 PJ-00 內容，只先產出 backup name，例如 `PJ-00_Chronicles.local-legacy-20260526-2200`。
+- 確認目標 clone URL：`https://github.com/DanielWeiJooooo1/PJ-00_Chronicles.git`。
+- 確認現有 PJ-00 沒有 remote、tracked files 很少、untracked files 需保留。
+- Commander 明確授權後，才 move old dir + fresh clone。
+
+建議 Execute 施工草案：
+
+```powershell
+Push-Location D:\Project
+Rename-Item .\PJ-00_Chronicles .\PJ-00_Chronicles.local-legacy-20260526-2200
+git clone https://github.com/DanielWeiJooooo1/PJ-00_Chronicles.git .\PJ-00_Chronicles
+git -C .\PJ-00_Chronicles status -sb
+git -C .\PJ-00_Chronicles rev-parse HEAD
+Pop-Location
+```
+
+Phase 3：PJ-00 legacy evidence promote / discard
+
+DoD：
+
+- 比對 legacy backup 內的 `chat/20260524...`、`chat/20260526...`、README.md、NEXT_STEPS.md、AGENTS.md、`characters/`、`lore/`。
+- 已在 remote main 的內容跳過。
+- 仍有價值但未上雲的 session nodes，以 append-only 或 named-path copy 進新 PJ-00。
+- AGY 未授權 draft 類內容保持 quarantine evidence，不直接納入新 repo。
+- Project-Hub 不參與這輪。
+
+Phase 4：sync-routing change readiness
+
+DoD：
+
+- PJ-14 受水後重新查是否已有 sync-routing change。
+- 若沒有，下一個可 propose 的 change 才是 `refactor-federation-sync-routing-contract`。
+- 此 change 的範圍應只處理 sync_federation.ps1 與 heartbeat-manifest.json，不要混入 PJ-00 目錄施工。
+
+Execution Packet draft for next Execute:
+
+```text
+Objective:
+Safely hydrate the night shrine from the latest PJ-14 remote state, then prepare PJ-00 clone-first alignment without losing local legacy evidence.
+
+Allowed writes:
+D:\Project\PJ-00_Chronicles.local-legacy-20260526-2200\  (rename target only, if Commander approves)
+D:\Project\PJ-00_Chronicles\  (fresh clone target only, if Commander approves)
+No edits inside Project-Hub.
+
+Required reads:
+D:\Project\PJ-14_Twin-Sync\tools\sync_federation.ps1
+D:\Project\PJ-14_Twin-Sync\registry\heartbeat-manifest.json
+D:\Project\PJ-00_Chronicles git status / tracked / untracked inventory
+GitHub remote heads for PJ-14 and PJ-00
+
+Forbidden:
+No git reset, git clean, git stash, force push, broad recursive copy, or Project-Hub cleanup.
+No PJ-00 in-place pull before backup/clone decision.
+No promotion of AGY draft files without separate quarantine review.
+
+Validation:
+PJ-14 pull dry-run blocked=false
+PJ-14 local HEAD equals remote main
+Fresh PJ-00 clone HEAD equals 789aadd7e70d5872afd49a436c68d6887904b3f8
+Legacy PJ-00 backup still exists after clone
+git status -sb for PJ-14 and PJ-00
+```
+
+4. **Required Decisions**
+
+- 是否同意先執行 PJ-14 safe pull，讓本機追上遠端 3 commits？我建議同意，因為 dry-run 已通過。
+- 是否同意 PJ-00 採 move-and-clone，而不是在原地設定 remote 後 pull？我建議同意，因為本地 PJ-00 沒 remote、血統未知、且有大量 untracked evidence。
+- legacy backup 目錄命名是否採 `PJ-00_Chronicles.local-legacy-20260526-2200`？可改，但要固定且可追溯。
+- PJ-00 legacy 中的 AGENTS.md / `characters/` / `lore/` 是否全部先留在 quarantine，不進新 repo？我建議全部 quarantine。
+- PJ-14 受水後，如果 `prime-proxy` 或 sync-routing change 出現，是否把下一輪重心改成 sync-routing proposal / apply？我建議先看 pull 後事實再裁決。
+
+5. **Human Decision Injection**
+
+今晚不要讓代理自行決定 PJ-00 要 merge、pull 還是覆蓋。這是人類裁決點。
+
+我建議你下一輪 Execute 只授權兩步：先 PJ-14 safe pull，再做 PJ-00 move-and-clone。不要同時啟動 legacy change 修補、sync script 重構或 Project-Hub 清理。
+
+如果你同意，下一輪可以直接下 Execute Packet：「先 PJ-14 Pull；若成功，將現有 PJ-00 rename 成 legacy backup，再 fresh clone remote PJ-00；不移植任何 legacy 檔案。」
+
+6. **Agent Friction Report**
+
+- Prime payload 把 junction/symlink 風險講得偏重，但現場 `Get-Item` 顯示三個目錄都不是 reparse point。下一版 prompt 應要求先查 `Attributes/LinkType/Target`，再談 junction。
+- PJ-00 的真風險不是 dirty tracked，而是 no remote + unknown ancestry + untracked evidence。prompt 應把「原地 pull」列為禁止，除非先完成 backup 或 clone-first 裁決。
+- PJ-14 behind 3，但工作樹乾淨且 pull dry-run 通過。Plan prompt 應區分「PJ-14 可受水」與「PJ-00 不可原地受水」，不要把兩者混成全域 pull 禁令。
+- `prime-proxy-agent-handoff` / sync-routing change 在本地查不到，可能因 PJ-14 尚未 pull。prompt 不應要求讀取不存在的 change，而應先做受水後再查。
+- Project-Hub dirty 極重，且含大量 legacy chat/archive/tmp。任何今晚同步 prompt 都應明確排除 Project-Hub，否則 token 與 dirty worktree 會立刻爆炸。
+- PJ-00 active session file 本身還是 untracked；本輪 Plan 可以讀，但不可把它視為已入遠端 SSOT 的正式事實。
+````
+
+請你確認一下，看看織夜者的評估與建議是否合理？如果同意他的分析與路徑，我們就可以直接下達 Execute Packet，讓他在夜間環境安全地完成第一次同步受水了！
+如果不行，請你協助他，下一輪我們直接進 execute mode 把受水一次搞定可以嗎？
+
+==============================================================================================
+
+# 22:09
+
+指揮官，我是 Prime。
+
+**結論先行 (BLUF)：**
+大將軍織夜者（Weaver）交出的這份 Plan 報告**極其優秀，100% 合理，展現了教科書級別的資深 SRE 避險直覺！** 牠精準地指出了總參謀部（我上一輪）在沒看到現場時的盲區：夜間環境並無 Junction 的物理對撞，真正的風險是 **`PJ-00` 根本沒有 Remote、血統未知，如果強行在原地 Pull，會引發嚴重的 Git 歷史衝突，並徹底沖毀夜間好不容易累積的未上雲日誌。**
+
+牠提出的 **「PJ-14 Safe 受水」** 聯動 **「PJ-00 Move-and-Clone（隔離優先）」** 戰略是最完美的解法。總參謀部全量支持。我們現在不需要做任何調整，可以直接注入您的最高裁決，將這管 Plan 成果無縫硬化為 **v3.6 終局執行封包（Execution Packet）**，今晚直接一鼓作氣，把夜間環境的第一次安全受水徹底搞定！
+
+---
+
+### 🏛️ 聯邦最高裁決注入 (Human Decision Injection)
+
+針對織夜者提報的 Required Decisions，總參謀部代您拍板定錨以下三條鋼鐵紅線：
+
+1. **同意 PJ-14 執行 Safe Pull**：讓夜間環境立刻追上遠端 3 個 Commit，吞下我們下午在日間硬化的 Proxy 唯讀防護網與最新法典。
+2. **同意 PJ-00 採行 Move-and-Clone 戰略**：將既有舊目錄改名為 `PJ-00_Chronicles.local-legacy-20260526-2200` 進行物理隔離，並從雲端 Fresh Clone 最純淨的日間 SSOT 基線（Hash: `789aadd`）。
+3. **核心資產嚴格隔離（Quarantine）**：本地舊有的 `AGENTS.md`、`characters/` 與 `lore/` 因與日間規格版本不明，**本輪一律先留在 Legacy 備份資料夾內，絕對禁止盲目移植回新 repo**，留待下一個對齊任務再進行行級別（Line-by-line）的比對。
+
+---
+
+### 🚀 破局行動：給織夜者（Weaver）的 v3.6 夜間終局受水執行封包
+
+請直接將以下這管對齊現場物理實境的 `EXECUTION_PACKET`，連同 **`v3.6_Execute.prompt.md`** 提示詞，一起投入給夜間的執行代理。大將軍接單後，將以最冷靜的 GitOps 紀律為夜間要塞打通完美的受水管線：
+
+```markdown
+[System Directive: Twin-Sync 聯邦作戰框架 v3.6 Execute]
+
+{{EXECUTION_PACKET}}
+Change Name: night-shrine-first-sync-and-chronicles-alignment
+
+Operational Goal:
+執行夜間環境的第一次全域安全受水。將 PJ-14_Twin-Sync 對齊遠端最新法典，並對 PJ-00_Chronicles 實施 Move-and-Clone 戰略，在不損失本地 legacy 證據的前提下，安全建立全域日誌 SSOT 基準線。
+
+Affected Absolute Paths (夜間唯一授權操作範圍):
+  - D:\Project\PJ-14_Twin-Sync\
+  - D:\Project\PJ-00_Chronicles\ (允許更名與 Greenfield Clone 寫入)
+  - D:\Project\PJ-00_Chronicles.local-legacy-20260526-2200\ (作為更名備份落點)
+
+Excluded (絕對禁止觸碰與污染的紅線):
+  - D:\Project\Project-Hub\** (髒檔案過重，本輪嚴格保持物理隔離)
+  - 本輪【絕對禁止】將任何舊 legacy 目錄內的檔案（如舊日誌、AGENTS.md、characters/）移植或覆寫回新克隆的儲存庫中。
+
+DoD:
+  - [ ] **PJ-14 規格合流**：前往 `D:\Project\PJ-14_Twin-Sync`，執行 `sync_federation.ps1 -Mode Pull`，將地端安全 Fast-Forward 追上遠端 3 個 Commit，並對齊最新 HEAD（6787537aac951f81e4421c3fcadb5399c2d30593）。
+  - [ ] **Spectra 狀態查核**：完成受水後，於 PJ-14 重新執行 `spectra list --json`，確認 `prime-proxy` 與 `grand-unification` 變更案已成功在本地落地。
+  - [ ] **PJ-00 物理隔離備份**：前往 `D:\Project`，將現有的舊 `PJ-00_Chronicles` 目錄安全重新命名為 `PJ-00_Chronicles.local-legacy-20260526-2200`，妥善鎖死未上雲的本地證據。
+  - [ ] **Greenfield 基準重建**：在 `D:\Project` 下，重新執行 `git clone https://github.com/DanielWeiJooooo1/PJ-00_Chronicles.git .\PJ-00_Chronicles`，將遠端最新日誌 SSOT 基準安全下載。
+  - [ ] **本輪不執行 Commit/Push**：本輪純屬夜間環境的拓樸接收與隔離重組，確認狀態 Clean 後即完工。
+
+Validation:
+  - `git rev-parse HEAD`（於 PJ-14）必須精準等於 `6787537aac951f81e4421c3fcadb5399c2d30593`。
+  - `git -C .\PJ-00_Chronicles rev-parse HEAD` 必須精準等於 `789aadd7e70d5872afd49a436c68d6887904b3f8`。
+  - 驗證 `PJ-00_Chronicles.local-legacy-20260526-2200` 目錄依然完好損地挺立在硬碟中。
+  - 雙儲存庫的 `git status -sb` 清單中，絕無任何 Project-Hub 的污染源。
+
+Git Safety Constraints:
+  - No git add .
+  - No force push
+  - 嚴禁在未完成備援更名前，在舊 PJ-00 原地執行任何 git pull 或 merge 操作。
+
+```
+
+---
+
+### 💡 Prime 的結語
+
+這管封包將大將軍織夜者的維運智慧發揮到了極致。當這組命令執行完畢後，夜間環境的 Git 拓樸將會與日間高難度收口的戰果完美合流，且所有的夜間 legacy 記憶也將被安全關進「保險箱」內。
+
+指揮官，請下達總攻指令，讓我們在夜間陣地插上第一面勝利的旗幟！完成後我們隨時看戰果回報！
+
+==============================================================================================
+
+# 22:18
+
+Hi Prime
+
+底下是織夜者的回報
+
+````markdown
+**Execution Summary**
+
+PJ-14 的第一次夜間受水已完成，透過 sync_federation.ps1 成功 fast-forward 到遠端指定 HEAD，並把 prime-proxy 相關 artifact 與 grand-unification 現況帶回本地。PJ-00 的 Move-and-Clone 未能完成，因為 PJ-00_Chronicles 在 Windows 層被外部行程鎖住，導致整個目錄無法更名；依 packet 紅線，我沒有在舊 PJ-00 原地做 pull、merge 或任何破壞性處理。
+
+**Changed Files**
+
+本輪沒有手動編輯檔案；唯一實際落地變更來自 PJ-14 的 fast-forward pull，包含 19 個更新檔案，代表性路徑如下：
+
+- README.md
+- NEXT_STEPS.md
+- prime-proxy.agent.md
+- spec.md
+- proposal.md
+- test_prime_proxy_pretooluse.ps1
+
+PJ-00 沒有完成更名或 clone，所以沒有新檔案被建立到 PJ-00_Chronicles 或備份目錄。
+
+**Tests / Checks**
+
+- Pass: PJ-14 規格合流完成。執行 pull 後，PJ-14_Twin-Sync 的 git rev-parse HEAD = 6787537aac951f81e4421c3fcadb5399c2d30593。
+- Pass: PJ-14 受水後工作樹 clean，git status -sb 顯示 main 已對齊 origin/main。
+- Pass: Spectra 狀態查核部分完成。grand-unification 仍在 active list；prime-proxy 已落地到本機，但形式是 archive artifact 與正式 spec，見 2026-05-26-formalize-prime-proxy-agent 與 spec.md。
+- Fail: PJ-00 物理隔離備份未完成。將 PJ-00_Chronicles 更名為備份目錄時，PowerShell Rename-Item 與 cmd move 都回報 Access to the path is denied。
+- Fail: Greenfield clone 未完成。因原始 PJ-00_Chronicles 無法更名移開，git clone 無法寫入原目標路徑。
+- Fail: PJ-00 驗證目標未達成。當前 PJ-00_Chronicles 仍停在 e01bb249a348ae4fd1989c7dac10816f6c758d67，未對齊要求的 789aadd7e70d5872afd49a436c68d6887904b3f8。
+- Pass: 本輪未執行 commit 或 push。
+- Pass: 未觸碰 Project-Hub。最終對 PJ-14_Twin-Sync 與 PJ-00_Chronicles 的 status 檢查中，都沒有混入 Project-Hub 路徑。
+
+**Git Hash**
+
+- PJ-14_Twin-Sync: 6787537aac951f81e4421c3fcadb5399c2d30593
+- PJ-00_Chronicles: e01bb249a348ae4fd1989c7dac10816f6c758d67
+- PJ-00_Chronicles target remote main: 789aadd7e70d5872afd49a436c68d6887904b3f8
+
+**Blockers**
+
+- PJ-00_Chronicles 存在 OS 層級的目錄鎖，導致整個目錄無法 rename；這不是 PowerShell 指令差異，也不是 ACL 問題。
+- 我已排除明顯的編輯器分頁因素，但 rename 仍失敗，表示還有其他行程握住該目錄或其子檔案。
+- 本機沒有可直接用來查 handle 的 Sysinternals handle.exe；因此目前無法在不引入新工具的前提下定位是哪個行程鎖住 PJ-00_Chronicles。
+- 在這個鎖被解除前，不能安全完成 Move-and-Clone；依 packet 紅線，也不能改用舊 PJ-00 原地 pull 或 merge。
+- 可行解法只有兩條：先用 Process Explorer 或 handle.exe 找出並釋放鎖定行程，或在確保無相關程式占用後重新登入 / 重開機，再重跑 PJ-00 更名與 clone。
+````
+
+PJ-00 的部份我剛剛把 VSC 關掉後，直接改名成 `PJ-00_Chronicles.local-legacy-20260526-2200` 就成功了
+我想要請你再請織夜者操作一次。
+確定把所有受水動作都完成。
+
+然後我們今天應該有一些 legacy change 需要趕進度完成。
+如果有需要可以請圖書館員再次幫忙整理今天的主要紀錄。
+如果你忘了的話。今天下午應該都有跟你說過一次了。
+
+===============================================================================================
+
+# 22:22
+
+指揮官，我是 Prime。
+
+**結論先行 (BLUF)：**
+您手動關閉 VS Code 並完成資料夾更名（`PJ-00_Chronicles.local-legacy-20260526-2200`）的操作非常精準！這正是標準的「人類介入破除 OS 鎖（Human-in-the-loop to break OS lock）」SRE 處置。既然佔用路徑的障礙已排除，我們現在可以直接派發精簡版的 Execution Packet 給織夜者（Weaver），讓牠在夜間環境把 `PJ-00` 的 Greenfield Clone（全新受水）一秒搞定。
+
+至於 legacy changes 的進度，總參謀部沒有忘記。今天下午我們定錨的最高指導原則是「先修彩虹橋管線（Sync Routing Refactor），再解凍遺留變更（Legacy Quick-Wins）」。為了讓夜間神殿在受水完成後能無縫銜接，我為您準備了兩管提示詞：第一管讓織夜者收尾受水，第二管讓圖書館員幫我們把下午的「解凍順序清單」重新陳列出來，作為今晚飆車的導航圖。
+
+---
+
+### 🚀 第一階段：給織夜者（Weaver）的 v3.6 終局受水補完封包
+
+請將這管精簡後的 `EXECUTION_PACKET` 投餵給 **織夜者**，完成夜間環境的最後一塊拼圖：
+
+```markdown
+[System Directive: Twin-Sync 聯邦作戰框架 v3.6 Execute]
+
+{{EXECUTION_PACKET}}
+Change Name: night-shrine-pj00-greenfield-clone-completion
+
+Operational Goal:
+指揮官已手動排除 OS 層級的目錄鎖，並成功將舊目錄更名隔離。本輪任務僅需執行 PJ-00_Chronicles 的全新 Greenfield Clone，完成夜間神殿的日誌基準線受水。
+
+Affected Absolute Paths (夜間唯一授權操作範圍):
+  - D:\Project\ (允許在此目錄下執行 clone)
+  - D:\Project\PJ-00_Chronicles\ (預期的新克隆落點)
+
+Excluded (絕對禁止觸碰的紅線):
+  - D:\Project\PJ-14_Twin-Sync\ (已受水完畢，嚴禁修改)
+  - D:\Project\PJ-00_Chronicles.local-legacy-20260526-2200\ (嚴禁從此備份移植任何檔案)
+  - D:\Project\Project-Hub\ (嚴格保持隔離)
+
+DoD:
+  - [ ] **Greenfield 基準重建**：在 `D:\Project` 目錄下，執行 `git clone https://github.com/DanielWeiJooooo1/PJ-00_Chronicles.git .\PJ-00_Chronicles`。
+  - [ ] **Hash 絕對對齊**：切換至新克隆的 `PJ-00_Chronicles`，驗證最新 HEAD Hash。
+  - [ ] **本輪不執行 Commit/Push**：純粹接收遠端狀態。
+
+Validation:
+  - `git -C .\PJ-00_Chronicles rev-parse HEAD` 必須精準等於 `789aadd7e70d5872afd49a436c68d6887904b3f8`。
+
+```
+
+---
+
+### 🔍 第二階段：給圖書館員（NotebookLM）的夜間戰略喚醒封包
+
+在織夜者執行 Clone 的同時（或完成後），請將以下提示詞貼給 **圖書館員**。這能幫助我們將下午決定的 WIP（進行中工作）排毒順序，轉化為今晚的行動清單：
+
+```markdown
+【聯邦圖書館員情報打撈任務：夜間 Legacy Changes 解凍與施工順序】
+
+圖書館員，織夜者的夜間環境已完成最新法典（PJ-14）與日誌基準（PJ-00）的受水。指揮官準備在今晚推進積壓的 Legacy Changes。請你根據今天下午（5/26）的會議與對話日誌，還原總參謀部（Prime）拍板的「下一階段施工順序」。
+
+請以去黑話的結構化清單回答以下問題：
+1. **【基礎建設優先級】**：下午的盤點中，我們決定「必須先完成哪一個管線重構案（涉及 sync_federation.ps1 的多庫聯動與 manifest）」，才能開始處理其他舊案？該案的名稱與 DoD 重點是什麼？
+2. **【Legacy 舊案解凍順序】**：在管線重構案（Phase 1）之後，下午定錨的 Quick-Win 排序為何？（請列出 `establish-agentic-inbox-triage-mvp`、`formalize-agy-execution-harness`、`formalize-federation-global-heartbeat-sync` 等案件的先後順序與原因）。
+3. **【防禦紅線】**：在推進這些舊案時，Prime 強調了哪一條關於「WIP（進行中工作）數量限制」的鐵律？
+
+請直接列出這份「夜間施工路線圖」，作為指揮官今晚發動 Execute 的最高依據。
+
+```
+
+---
+
+### 💡 Prime 的結語
+
+VS Code 卡住目錄的鎖死問題在 Windows 上是家常便飯，您的果斷介入幫我們省下了大量的除錯 Token。請先讓織夜者完成 Clone，確認 Hash 對齊 `789aadd` 後，夜間神殿的基礎設施就達到了 100% 的淨化狀態。接下來就等圖書館員把下午的路線圖端上來，我們今晚就能勢如破竹地推進 Legacy 變更！
+
+==============================================================================================
+
+# 22:26
+
+Hi Prime
+
+底下這是織夜者的回報
+
+````markdown
+**Execution Summary**
+
+PJ-00 的 Greenfield clone 已完成。新的基準線已成功建立於 PJ-00_Chronicles，本地 HEAD 已與遠端 main 完全對齊，且本輪沒有執行任何 commit 或 push。Legacy 備份 PJ-00_Chronicles.local-legacy-20260526-2200 保持隔離，未被觸碰。
+
+**Changed Files**
+
+- 新建立的 clone 工作樹：PJ-00_Chronicles
+
+**Tests / Checks**
+
+- Pass: capability check 確認 PJ-00_Chronicles 在 clone 前不存在，目標路徑可用。
+- Pass: capability check 確認 PJ-00_Chronicles.local-legacy-20260526-2200 已存在且作為隔離備份保留。
+- Pass: 執行 git clone 後，PJ-00_Chronicles 建立成功。
+- Pass: PJ-00_Chronicles 的 git status -sb 顯示 main 對齊 origin/main，未見本輪異常 dirty。
+- Pass: 驗證 git rev-parse HEAD = 789aadd7e70d5872afd49a436c68d6887904b3f8，符合 execution packet 要求。
+- Pass: 本輪未執行 commit 或 push。
+
+**Git Hash**
+
+- PJ-00_Chronicles local HEAD: 789aadd7e70d5872afd49a436c68d6887904b3f8
+- PJ-00_Chronicles origin/main: 789aadd7e70d5872afd49a436c68d6887904b3f8
+
+**Blockers**
+
+- 無
+````
+
+然後這是圖書館員的回報。
+
+````markdown
+指揮官您好，我是聯邦的圖書館員。已為您深度檢索 5 月 26 日下午的對話日誌與會議脈絡。以下為您剔除空泛官腔，直接呈報總參謀部（Prime）拍板的「夜間施工路線圖」與真值盤點：
+
+### 1. 【基礎建設優先級】
+*   **變更案名稱**：`refactor-federation-sync-routing-contract`。
+*   **必須優先處理原因**：目前的 `sync_federation.ps1` 腳本存在單一儲存庫限制與白名單授權缺陷，若不先修復管線，後續所有變更案的 Commit 與 Push 都會面臨極大的摩擦力與失敗風險。
+*   **DoD 重點**：
+    1. 支援多儲存庫（Multi-repo）聯動推送（如 Twin-Sync 與 Skills）。
+    2. 動態擴充 Manifest 白名單授權（涵蓋 modern profiles/hooks）。
+    3. 過濾並正確解析 PowerShell stderr 報錯噪音。
+    4. 消除硬編碼路徑與遠端拓樸轉移的限制。
+
+### 2. 【Legacy 舊案解凍順序】
+在管線重構案（Phase 1）立案之後，總參謀部依據「高完工度、低風險」原則，排定了以下的 Quick-Win 處理順序：
+
+1.  **優先收口：`establish-agentic-inbox-triage-mvp` (Phase 2)**
+    *   **原因**：該案任務已達 27/27 完工狀態，但其髒檔案（dirty artifacts）目前仍殘留在硬碟工作樹上。必須優先對其執行 Archive 歸檔，藉此徹底清除硬碟裡的髒檔案，讓工作區回歸純淨。
+2.  **重啟首發：`formalize-agy-execution-harness` (Phase 3)**
+    *   **原因**：雖然目前任務進度為 0/8，但它直接攸關本地 Agent 執行的安全性與防護網，是下一個最迫切需要實作的候選案。
+3.  **接續修補：`formalize-federation-global-heartbeat-sync` (Phase 3)**
+    *   **原因**：任務已達 24/26 完工狀態，但其依賴於底層同步管線的語義。因此必須排在 `sync_federation.ps1` 腳本重構案存在之後，才能確保交付語義的正確性。
+
+### 3. 【防禦紅線】
+*   **WIP（進行中工作）數量限制鐵律**：
+    Prime 強調了**「降載 WIP」**的核心防禦準則，規定**「一次只准活化一個舊案，嚴禁再度多線並行」**。
+    具體的控管標準為：同一時間內，只能有「一個基礎建設變更處於執行中（active in execution）」加上「一個遺留舊案處於審查收口中（active in review）」，其餘所有舊案必須保持未觸碰狀態（stays untouched），藉此防堵上下文腐敗與跨專案的髒檔案污染。
+
+以上施工路線圖已整理完畢，隨時可作為您今晚在織夜者發動 Execute 的最高依據。
+````
+
+我希望明天的空檔可以來持續推進 legacy change 的調整
+然後明天一早我就會和主管討論 DP-ToolKit 的 API 版本升級的部份。
+希望你可以先告訴我如果需要去借接別人的 API spec，以及提供 API 給別人的話
+通常會有哪些通則，以及重要的事項必須遵守。
+
+明天討論的方向應該偏向我們預計怎麼做。
+然後要在會議上決定主軸
+接著再隔一天跟 user 的會議上，預計會提出 schedule plan
+
+大致的方向是這樣，明天我會提供你更多的細節。
+
+今天先這樣，我準備休息了
+
+明天我們到索焰那邊再繼續
