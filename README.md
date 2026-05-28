@@ -1,6 +1,6 @@
 # PJ-00 Chronicles
 
-最後更新：2026-05-27 17:45
+最後更新：2026-05-28 15:01
 
 ## Objective
 
@@ -10,14 +10,12 @@
 ## Topology
 
 - `chat/`：Session Log 與歷史紀錄。
-- `reports/`：一頁式報告與索引。
 - `README.md`：專案總覽。
 - `NEXT_STEPS.md`：立即行動與已完成事項。
 
 ## Index
 
-- 最新報告：`reports/20260525_monthly_onepager_2026-05.md`
-- 報告索引：`reports/INDEX.md`
+- 目前以 `chat/` 為主；`reports/` 已退場，需新報告時再重建。
 
 ## Constraints
 
