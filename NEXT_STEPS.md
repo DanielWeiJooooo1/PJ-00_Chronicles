@@ -1,11 +1,11 @@
 # NEXT_STEPS
 
-更新時間：2026-05-28 17:16
+更新時間：2026-05-28 20:05
 
 ## 下一步（立即行動）
 
-- [ ] 補上 `PJ-00_Chronicles` 的 heartbeat push route（需支援 `master -> origin/main` explicit refspec） ⏰ 30m
-- [ ] 將 repo-local `PJ-14_Twin-Sync\tools\sync_federation.ps1` 與 bridge v2 contract 對齊，避免 5P 優先命中 legacy script ⏰ 45m
+- [ ] 在 7N / 其他節點驗證新的 `D:\Project\Skills\federal-sync\scripts\sync_federation.ps1` 是否可直接處理 `PJ-00_Chronicles` heartbeat ⏰ 20m
+- [ ] 釐清 `PJ-00_Chronicles` 的 `.openspec.yaml` / change artifacts 與 `.spectra/` runtime cache 邊界 ⏰ 30m
 - [ ] 每次 session 結束後，將當天的 `chat/yyyyMMdd_Twin-Sync_AI_Session.md` stage/commit/push 到雲端 ⏰ 10m
 - [ ] `reports/` 目錄若要回歸使用，先重建目錄並同步更新 `README.md` Index ⏰ 20m
 
@@ -13,6 +13,7 @@
 
 | 更新時間 | 項目 | 摘要 |
 | --- | --- | --- |
+| 2026-05-28 20:05 | `federal-sync` SSOT 收斂完成 | canonical script 回到 Skills skill folder，`PJ-00_Chronicles` heartbeat push lane 已改為 upstream-derived refspec。 |
 | 2026-05-28 17:16 | 聯邦文件治理與同步收口 | Twin-Sync 已受水到最新，PJ-00 README / NEXT_STEPS 完成 doc-regulation，並記錄 heartbeat push contract gap。 |
 | 2026-05-28 15:01 | 14:45-14:59 節點整理 | 3 個節點已瀏覽；14:50 與 14:59 為 14:45 之後的延伸更新。 |
 | 2026-05-27 17:45 | 下班收口同步 | session log + README + NEXT_STEPS 推上 GitHub；doc-regulation 收口完成。 |

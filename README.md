@@ -1,6 +1,6 @@
 # PJ-00 Chronicles
 
-最後更新：2026-05-28 17:16
+最後更新：2026-05-28 20:05
 
 ## Objective
 
@@ -24,6 +24,16 @@
 - 報告輸出以主管可讀、可列印、可轉 PPT 為優先。
 
 ===========================================================================================
+
+# 20:05
+
+今日 `federal-sync` 腳本收斂：
+
+- `D:\Project\Skills\federal-sync\scripts\sync_federation.ps1` 已升格為唯一 SSOT；`PJ-14` repo-local path 改為 compatibility wrapper，舊 `sync_federal_laws.ps1` 已移入 archive。
+- heartbeat runtime 已原生納入 `PJ-00_Chronicles`，Push 改以 upstream-derived explicit refspec 處理 `master -> origin/main`，不再依賴手動補 push。
+- Twin-Sync Wiki 已新增 lesson，記錄這次「skill contract 存在，但真正 runtime script 不在 skill folder」造成的 hidden backend drift。
+
+---
 
 # 17:16
 
