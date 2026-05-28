@@ -1,6 +1,6 @@
 # PJ-00 Chronicles
 
-最後更新：2026-05-28 15:01
+最後更新：2026-05-28 17:16
 
 ## Objective
 
@@ -24,6 +24,16 @@
 - 報告輸出以主管可讀、可列印、可轉 PPT 為優先。
 
 ===========================================================================================
+
+# 17:16
+
+今日聯邦法典收口：
+
+- 已用 bridge v2 `sync_federation.ps1` 完成 `PJ-14_Twin-Sync` safe pull；Twin-Sync ff-only 拉下 1 commit，`Skills` 確認 already current。
+- `PJ-00_Chronicles` 已完成本輪 doc-regulation 收口，準備將今日 session log 與 README / NEXT_STEPS 一併推上 GitHub。
+- 觀察到 repo-local `PJ-14_Twin-Sync\tools\sync_federation.ps1` 仍屬 legacy candidate；`PJ-00_Chronicles` 目前也仍需 explicit refspec 才能安全推到 `origin/main`，暫不適合直接走 bare heartbeat push。
+
+---
 
 # 17:45
 
