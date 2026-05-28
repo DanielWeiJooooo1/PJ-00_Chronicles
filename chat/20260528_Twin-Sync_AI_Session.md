@@ -1024,3 +1024,90 @@ Add-Content -Path "D:\Project\PJ-00_Chronicles\chat\20260528_Sync_Log.md" -Value
 ## 💡 Prime 的結語
 
 雲端受水完畢後，彩虹橋將進入「隨時可供受水」的綠燈狀態。指揮官，請您下達發射指令，我們下午 5P 實體要塞見！
+
+=============================================================================================
+
+# 15:39
+
+我先把剩下的兩個 repo 正式封裝並推上去，之後直接給你一份可貼進 session log 的總結。
+
+**完成了。** 我已把同步與技能修改都做完，現在兩邊版本已對齊。
+
+**同步結果**
+- `PJ-14_Twin-Sync`：已將本地較新的法典與 heartbeat 修補封裝並推上遠端  
+  - commit: `2bfc71f`
+  - local/remote `main` 已對齊
+- `Skills`：已更新 `federal-sync` 技能並推上遠端  
+  - commit: `274429f`
+  - local/remote `main` 已對齊
+- `PJ-00_Chronicles`：先前已同步完成，本輪未再修改
+
+**我是怎麼解決的**
+1. 先確認 `PJ-14` 不是網路或真正 merge conflict 問題；`fetch` 正常，`HEAD` 與 `origin/main` 原本就相同。
+2. 找到真正根因：`sync_federation.ps1` 用 `2>&1` 把 `git` 的 stderr 一起吃進來，PowerShell 7 會把 `LF/CRLF` warning 混進結果，導致腳本把 warning 誤判成 `unmerged-conflicts`。
+3. 修 backend：
+   - 改成分開收 `stdout` / `stderr`
+   - 只有非 0 exit code 才當錯誤
+   - `warning:` 只記為 warning，不再當成 merge conflict
+4. 重新跑 dry-run 後，確認誤判已消失；剩下的是**真實 dirty worktree**，不是假衝突。
+5. 因為這輪 `remote` 並沒有比本地新，所以依你的要求採用 **本地較新的版本**，將 `PJ-14` 變更 commit + push。
+6. 再依 `skill-creator-advanced` 規範更新 `federal-sync` 技能，補上這次 false positive 的規則與 checklist。
+
+**這次技能更新了哪些部分**
+- `Skills\federal-sync\SKILL.md`
+  - 版本從 `2.3.0` 升到 `2.3.1`
+  - 補上 `backend-warning-false-positive` 規則：
+    - 若 `unmerged-conflicts` 其實只是 `LF/CRLF` 或其他 native stderr warning，不能直接宣告衝突，必須改看真正的 `diff-filter=U` 與 dirty classification
+- `Skills\federal-sync\references\quality_checklist.md`
+  - 增加這次腳本誤判案例
+  - 更新 readiness 結論與後續追蹤項
+- `PJ-14_Twin-Sync\tools\sync_federation.ps1`
+  - 修正 stderr/warning 誤判
+- `PJ-14_Twin-Sync\DECISION_LOG.md`
+  - 記錄這次 backend 誤判的治理決策
+- `PJ-14_Twin-Sync\NEXT_STEPS.md`
+  - 記錄 heartbeat 修補已完成
+
+**補充**
+- `skill-creator-advanced` 的 Python 檢核腳本在這台機器上有環境缺口：缺 `PyYAML`，而且本地 `pip/conda` 也不可用，所以**格式檢核腳本沒有完整跑完**。  
+- 但我已先完成實際技能修改、diff 檢查、quality checklist 回填與正式同步。
+
+你可以直接把下面這段貼進 session log：
+
+```markdown
+**Execution Summary**
+- 已完成聯邦法典同步：`PJ-14_Twin-Sync` 採用本地較新的版本封裝並推上遠端，`Skills` 的 `federal-sync` 技能修補也已同步上雲；兩個 repo 的 local/remote `main` 均已對齊。
+- 已確認這次 heartbeat 阻塞的根因不是實際 merge conflict，而是 `sync_federation.ps1` 在 PowerShell 7 下把 `git` 的 stderr warning（例如 `LF/CRLF` line-ending warning）誤判成 `unmerged-conflicts`。
+- 已修正 backend：`Invoke-Git` 現在分開處理 stdout/stderr，warning 只作 warning 記錄，不再阻斷 dry-run / sync 判讀。
+- 已依 `skill-creator-advanced` 規範更新 `federal-sync` 技能到 `v2.3.1`，補上 `backend-warning-false-positive` 規則與 readiness checklist。
+
+**Changed Files**
+- `D:\Project\PJ-14_Twin-Sync\.spectra.yaml`
+- `D:\Project\PJ-14_Twin-Sync\DECISION_LOG.md`
+- `D:\Project\PJ-14_Twin-Sync\NEXT_STEPS.md`
+- `D:\Project\PJ-14_Twin-Sync\tools\sync_federation.ps1`
+- `D:\Project\PJ-14_Twin-Sync\openspec\changes\formalize-federation-grand-unification-foundation\specs\bilingual-token-ops\spec.md`
+- `D:\Project\PJ-14_Twin-Sync\openspec\changes\formalize-federation-grand-unification-foundation\specs\federation-foundation-governance\spec.md`
+- `D:\Project\PJ-14_Twin-Sync\openspec\changes\formalize-federation-grand-unification-foundation\specs\pantheon-readonly-agents\spec.md`
+- `D:\Project\PJ-14_Twin-Sync\openspec\changes\formalize-federation-grand-unification-foundation\specs\virtual-root-topology\spec.md`
+- `D:\Project\PJ-14_Twin-Sync\openspec\changes\establish-dp-toolkit-fdc-ingestion-spec\**`
+- `D:\Project\Skills\federal-sync\SKILL.md`
+- `D:\Project\Skills\federal-sync\references\quality_checklist.md`
+
+**Tests / Checks**
+- `git fetch --prune origin`：PJ-14 / Skills 均成功。
+- `sync_federation.ps1 -Route night -Mode pull -DryRun`：修補後已不再誤報 `unmerged-conflicts`；目前只會正確揭露真實 `route-managed-dirty-worktree`。
+- `spectra validate formalize-federation-grand-unification-foundation --strict`：Pass
+- `spectra validate establish-dp-toolkit-fdc-ingestion-spec --strict`：Pass
+- `git push origin main`：PJ-14 / Skills 均成功。
+- `git ls-remote origin refs/heads/main`：兩個 repo 遠端 hash 已與本地對齊。
+- `skill-creator-advanced` 的 Python 檢核腳本未完整跑通；本機缺 `PyYAML`，且 `pip/conda` 安裝鏈路不可用。
+
+**Git Hash**
+- `PJ-14_Twin-Sync`: `2bfc71ff7eb0270a58a6d32e823eb604b97eb8c7`
+- `Skills / federal-sync`: `274429f779ac0302e85a36f58f08bf97c4a3370a`
+
+**Blockers**
+- 無同步 blocker。
+- 後續若要完整跑 `skill-creator-advanced` 的格式檢核腳本，需先修復本機 Python 套件環境（至少補齊 `PyYAML`）。
+```
