@@ -817,3 +817,47 @@ Which of these are wrong? 哪些假設不符合你的意圖？
 ## 💡 Prime 的結語
 
 明白。日間控制平面已完全校準為「人因控制、繁中優先」的極速架構。請指揮官發動最後的受水封包，即可放心結束今日的白日戰役。我們今晚在織夜者神殿見。
+
+============================================================================================
+
+# 16:56
+
+Hi Prime
+
+這是吟遊完成的受水戰報
+
+```markdown
+Invoked skill: doc-regulation
+
+`doc-regulation` 沒有註冊成 runtime skill；我先讀它的規範，接著直接按規範完成下班前的文件與狀態同步。
+
+我先抽出 `doc-regulation` 的核心 contract 與目前 repo 狀態，然後只更新 `PJ-00_Chronicles` 的治理文件，不動其他原始內容。
+我現在補看 `PJ-00_Chronicles` 文件的可更新區塊，準備把今天 16:46 的受水結果記進去。
+我先把兩個文件的現況直接列出來，避免補錯欄位。
+
+補丁位置和目前文件不一致，我先讀出這兩個檔案的實際內容再精準更新。
+我先檢查 `PJ-00_Chronicles` 目前有哪些待封裝變更，再把下班前的狀態同步寫進文件並整理 git 狀態。
+
+我會把 `README.md` / `NEXT_STEPS.md` 整理成乾淨可讀的 markdown，再把今天的 session log 一起做 path-scoped 收口。
+文件已整理；我現在確認只留下今天該收口的三個檔案，然後做 path-scoped commit / push。
+
+**已完成下班前的法典狀態與內容同步。** `PJ-00_Chronicles` 已完成 doc-regulation 收口並推上 GitHub，commit 為 `58d195d`，本機與遠端 `main` 已對齊。
+
+這次收口包含：
+- `chat/20260529_Twin-Sync_AI_Session.md`
+- `README.md`
+- `NEXT_STEPS.md`
+
+**我做的整理重點：**
+- 把 `README.md` 修回乾淨可讀的 markdown 結構，保留既有治理脈絡與 recent notes
+- 在 `NEXT_STEPS.md` 補上 `2026-05-29 16:51` 的下班前控制平面受水結果
+- 只用 path-scoped staging 封裝今天該收口的 3 個檔案，沒有捲入其他 repo 或無關變更
+
+**狀態摘要：**
+- `PJ-14_Twin-Sync`：`e132911`，clean，`ahead=0 / behind=0`
+- `PJ-25_Nexus-Dashboard`：clean，`ahead=0 / behind=0`
+- `Skills`：clean，`ahead=0 / behind=0`
+- `PJ-00_Chronicles`：已完成文件同步並上雲
+
+**補充**：`@file:doc-regulation` 仍不是已註冊的 runtime skill，所以這次是依附加 skill 的規範手動執行完成。
+````
