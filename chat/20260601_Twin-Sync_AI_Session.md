@@ -459,3 +459,174 @@ Hi Prime
 
 💡 **Prime 的結語**
 指揮官，織夜者負責踩煞車與畫地圖，Agy CLI 負責幫您釐清那些危險的系統邏輯。請先讓織夜者（Packet 1 & 2）把現有的共識「存檔」，然後我們再用 Agy CLI（Packet 3）把那四顆未爆彈一顆顆拆解。這才是無懈可擊的 Agentic 工程！
+
+=============================================================================================
+
+# 00:40
+
+Hi Prime
+
+這是織夜者的第一份回報
+
+```
+完成 Phase 2 規格合約收斂，只有文件編輯，沒有建立 `frontend/`，沒有修改 `.py`，也沒有修改 `.js`。
+
+我更新了這四個段落群：
+
+- proposal.md：補上 Phase 2 限制、Path B 前端重構裁決、`quest_board.md` 降級為 historical archive、RPG 狀態改為 PJ-25 local projection、Heptabase 能力安全矩陣，以及「Phase 2 不建立前端 scaffold」的 Non-goal。
+- design.md：更新架構圖與目標目錄結構，把 `player.json` 改為 migration seed、`quest_board.md` 改為 read-only archive/evidence，新增 `gamification_state.json` local projection、Heptabase capability matrix、dry-run gate、RPG 資料源契約與 Phase Gates。
+- design.md：把舊的 CLI `0.1.x` 背景補上新版 capability refresh，更新為 CLI `0.4.x` / Skill `v1.4.0`，並把白板能力改成 Green / Yellow / Red 安全矩陣。
+- spec.md：同步更新 OpenSpec 需求，加入 capability safety matrix requirement，並把 whiteboard 條款改成「add/remove card 可 governed，edge/layout/create/database access blocked」。
+
+驗證結果：
+
+- `get_errors`：四個 Markdown 檔都 No errors found。
+- trailing whitespace 掃描：No trailing whitespace found。
+- `spectra validate --changes integrate-heptabase-cli`：通過。
+- `Test-Path PJ-25_Nexus-Dashboard/frontend`：`False`，確認沒有建立前端 scaffold。
+
+工作樹狀態有兩點要注意：PJ-25 的 `docs/proposal.md` / `docs/design.md` 目前仍是 untracked 文件；另外狀態快照顯示 app.js 已是 modified，但本輪沒有觸碰任何 `.js` 檔。
+```
+
+然後這是第二份回報
+
+```
+**Wiki 歸檔完成**
+
+已依 `doc-regulation` 做完文件管理與聯邦法典狀態更新，並用 path-scoped Git 收口。提交已推送到 `origin/main`。
+
+Commit Hash：`3e9c9218216c0dedbc539b5b1b91191cb14942e0`  
+Commit Message：`docs(wiki): formalize agentic development workflow and update readme`
+
+本次提交包含：
+
+- Agentic-Development-Workflow.md
+- README.md
+- README.md
+- NEXT_STEPS.md
+- DECISION_LOG.md
+- 聯邦戰情速報.md
+- 聯邦任務追蹤器.md
+- state.yaml
+
+我也完成了驗證：Markdown diagnostics 全部通過、trailing whitespace 檢查通過、`git diff --cached --check` 通過、`spectra validate --changes integrate-heptabase-cli` 通過。`federal-sync` 先 dry-run，再正式 Push，遠端 `origin/main` 已確認指向同一個 hash。
+
+剩餘未提交變更仍留在工作樹，未被本次提交捲入：.spectra.yaml、`integrate-heptabase-cli` 的設計/規格更新、`docs/wiki/research/`、`openspec/changes/add-post-archive-tbd-reminder/`。依 `doc-regulation` 規範，Session Log 不由我自動追加，保留給指揮官手動貼入。
+```
+
+再來[Agy 的報告](../../PJ-25_Nexus-Dashboard/docs/design_backend.md)在此，看檔名就知道不是 spectra SDD 的文件命名方式了。
+請你提供分析結論。
+有點晚了，我想可能先做一次完整的全域心跳同步後，在看看有沒有什麼我們可以放下去背景讓 Agy 直接操作？(好像有一點危險)
+
+==============================================================================================
+
+# 00:49
+
+指揮官，我是 Prime。
+
+**戰局判定：** 織夜者（Weaver）的表現堪稱典範，嚴格遵守了「只存檔、不施工」的隔離邊界，並成功完成了 Wiki 歸檔（Commit `3e9c921`）。然而，Agy CLI 產出 `design_backend.md` 顯示了典型的「代理碎片化（Agent Fragmentation）」特徵。至於您提議的「放背景讓 Agy 盲測」——**我行使主任級 SRE 的一票否決權：今夜絕對禁止任何背景實作。**
+
+以下是本輪狀態的深度剖析與收尾指令。
+
+---
+
+### 👁️ Prime 戰略剖析：法典碎片化與夜間封鎖令
+
+#### 1. Agy CLI 的「碎片化」行為 (Agent Fragmentation)
+
+Agy CLI 在完成 `/grill-me` 盤問後，沒有將結果寫入既有的 `design.md`，而是自創了 `design_backend.md`。
+
+* **根因分析**：這是因為 Agy 是「大腦」，在沒有明確的 `AGENTS.md` 裝具嚴格約束路徑時，它為了避免覆寫現有檔案，選擇了最安全的做法——新建檔案。
+* **SRE 判定**：這不是壞事，至少它沒有弄壞現有規格。但在明日的 Phase 3 (任務拆解) 前，我們必須執行一個 **「規格融合 (Spec Merging)」** 動作，把 `design_backend.md` 的後端邏輯吸收進正統的 `design.md` 與 `tasks.md` 中。Spectra 的 SDD 流程不承認 `design_backend.md` 這種非標準命名。
+
+#### 2. 為什麼今晚禁止「背景盲跑」？ (PEGT 鐵律防線)
+
+您敏銳地感覺到「有一點危險」，您的直覺救了聯邦的資料庫。
+
+* **高風險突變區 (High-Risk Mutation Surface)**：Agy 剛盤問完的 4 個主題（特別是 `state.yaml` 自動 Git Commit 的拔除、舊 JSON 資料的降級）屬於聯邦的「核心資料庫級別」改動。
+* **違反 PEGT 鐵律**：在聯邦法典中，任何 Execute 必須建立在 Verify（驗證邊界）與明確的 `tasks.md` 裝具之上。目前任務尚未切碎、Log 框架尚未建立，若讓 Agy 在背景執行，它會觸發不可預期的連鎖破壞（Vibe Coding 的最糟情境）。
+
+#### 3. 當前未追蹤檔案的風險 (Untracked Files Risk)
+
+織夜者回報 `proposal.md`、`design.md` 以及新生的 `design_backend.md` 目前處於 Untracked 狀態。若不立即收口，跨日後 Agent 將產生「失憶症」。
+
+---
+
+### 🚀 破局行動：全域心跳與安全關機 (Global Heartbeat & Shutdown)
+
+今晚的最後一擊，不是向前衝鋒，而是「固化戰果」。我們必須將這些未追蹤的規格書安全地鎖入 Git，並觸發彩虹橋同步，確保明天起床時，您的雙軌環境擁有最精準的設計圖。
+
+請將以下戰略封包投餵給終端機裡的 **織夜者 (Weaver/Copilot CLI)**：
+
+```markdown
+[System Directive: Twin-Sync 聯邦作戰框架 v3.6 Execute]
+[Mode: Execute | 規格資產安全收口與全域心跳]
+
+[Strategic Objective]
+指揮官下令終止本夜所有探索行動。當前 `PJ-25_Nexus-Dashboard` 與 `integrate-heptabase-cli` 的規格檔案（包含 Agy 產出的非標準檔案）處於 Untracked 狀態。必須以精準的 Path-scoped Git 操作將其安全鎖入本地儲存庫，並推播至 GitHub。
+
+[Execution Sequence (Strict Order)]
+1. **精準暫存 (Path-Scoped Stage)**：
+   - 嚴禁使用 `git add .` 或 `git add -A`，以免捲入 `app.js` 或其他非預期的髒模組。
+   - 僅精準 `git add` 以下目標：
+     * `PJ-25_Nexus-Dashboard/docs/proposal.md`
+     * `PJ-25_Nexus-Dashboard/docs/design.md`
+     * `PJ-25_Nexus-Dashboard/docs/design_backend.md` (Agy 產出)
+     * `openspec/changes/integrate-heptabase-cli/` 底下被修改的規格檔
+     * 本夜建立的 `.github/copilot-instructions.md` (若存在)
+2. **規格提交 (Commit)**：
+   - 執行 `git commit -m "docs(spec): converge phase 2 design artifacts for PJ-25 and heptabase CLI"`
+3. **全域同步 (Global Sync)**：
+   - 呼叫本地 `doc-regulation`。
+   - 執行 `tools/sync_federation.ps1`，確保變更推播至 GitHub 橋樑 (`origin/main`)。
+
+[Closing Protocol]
+執行完畢後，向指揮官回報 Commit Hash，並宣告：「防禦陣地已建立，建議指揮官登出休息。」
+
+```
+
+---
+
+💡 **Prime 的結語**
+指揮官，打磨武器本身，就是在贏得戰爭。我們今晚成功將聯邦從「憑感覺亂寫」的泥沼中拉出，並建立了嚴格的 Agentic 設計邊界。請讓織夜者執行封存，然後安心休息。明日，我們將踩著這份設計圖，展開精準的任務拆解與實作。
+
+==============================================================================================
+
+# 00:50
+
+已完成，而且我是照 doc-regulation 與 federal-sync 的規則做的，不是直接硬推。
+
+**執行結果**
+- 這次任務橫跨兩個 repo，依 doc-regulation 的多 repo 封裝規則，我分成兩個 path-scoped commit，而不是做不存在的跨 repo 單一 commit。
+- PJ-25 已提交並推送到 origin/main。
+  Hash：b79233b320c457430f2acb9d5a836eb3bc9e23a3
+  內容： proposal.md、design.md、design_backend.md
+- PJ-14 已提交並透過 federal-sync 推送到 origin/main。
+  Hash：52bd9de2e817116cd0eecb6d662c332cb656070f
+  內容： design.md、spec.md
+- 本夜沒有可提交的 .github/copilot-instructions.md 變更。
+  copilot-instructions.md 存在但未修改，PJ-25 下沒有對應檔。
+- 驗證已通過：
+  PJ-25 三份文件 diagnostics 正常、trailing whitespace 清乾淨；
+  PJ-14 的 integrate-heptabase-cli 再跑一次 spectra validate 仍為 valid；
+  federal-sync 已實際執行 dry-run 與正式 Push。
+
+**分析結論**
+- design_backend.md 有價值，但它不是 Spectra / OpenSpec 的標準規格工件。
+- 它的正確定位應該是「Agy 盤問後產出的補充設計草圖 / 後端防禦附錄」，不是正式 SDD 契約本體。
+- 正式契約仍應以 design.md、proposal.md，以及 PJ-14 的 OpenSpec 條款為準。
+- 所以我同意把它先安全鎖進 repo，但不同意把它視為已完成 Spectra 設計收斂。它目前是「已保存的設計素材」，不是「唯一真相」。
+
+**全域心跳判讀**
+- federal-sync 的全域 dry-run discovery 已跑過。
+- 乾淨可放行的 repo：PJ-24、Skills。
+- 已同步但仍有 tracked dirty 的 repo：PJ-14、PJ-25、PJ-00_Chronicles。
+- Quarantine 中的 repo：Project-Hub、LLM-Wiki。
+- 這代表現在不適合再放任何會寫檔、會 scaffold、會自動 commit 的背景任務給 Agy。
+
+**給 Agy 的裁決**
+- 今晚只建議一種背景任務：純 read-only 的盤問型任務。
+- 可以做：針對四個未決議題繼續 /grill-me，產出決策問題與選項，不改檔、不落地、不提交。
+- 不可以做：前端 scaffold、API 改寫、state/task mutation、Heptabase 寫入流程、任何 Git 動作。
+
+防禦陣地已建立，建議指揮官登出休息。
