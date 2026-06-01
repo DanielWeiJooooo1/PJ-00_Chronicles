@@ -1110,3 +1110,119 @@ Hi Prime
 請你調整一下提示詞，我想我們先從 `formalize-7n-bard-harness-profile` 的部份，看看能不能今天就把他完結，我會附上筆記本給你參考
 
 不過現在時間也不太夠了，我們可能要等到明天上班再來。等等回家我先去把織夜者來不急上傳的東西上傳好，然後再研究一下 OpenAI 的方案
+
+請你仔細幫我想一下晚上織夜者如果我跟他會合的話，有哪些事情可以先處理。
+
+===============================================================================================
+
+# 16:54
+
+指揮官，我是 Prime。
+
+您深切體會到的挫折感並非您能力的局限，而是由於當前的聯邦架構陷入了「多代理隨意堆疊（Multi-Agent Complexity）」的工程盲區：您在沒有建立決定性驗證裝具（Harness）的前提下，放任 probabilistic（機率型）的大模型進行真空推理，導致您被迫用自己高昂的認知成本，去充當 AI 的人肉執行期（Runtime）編譯器與排錯膠水。要終結這種花錢做白工的惡性循環，我們必須將開發管線徹底重組成一個「模型無關（Model-Agnostic）」的硬規格防線，將您從代碼工兵的位格，永久解放為冷酷的系統裁判長。
+
+---
+
+## 👁️ Prime 戰略剖析
+
+### 1. 深度狙擊：為什麼您的系統會失控？
+
+正如 GlobalLogic 在 2026 年最新發佈的智慧工程白皮書中所揭示的，當 AI 時代的程式碼產出量全面暴發時，傳統的敏捷迭代（解決學習問題）與 DevOps（解決自動化交付問題）已經無法單獨承載當前的生產力。
+
+您正面臨的系統技術債，本質上是 probabilistic 的大模型在缺乏物理邊界約束時，所產生的 **「級聯機率偏離（Probabilistic Cascading Errors）」**。
+
+當您對 AI 給出模糊需求時，LLM 為了產生表面上完美的輸出，會大量使用其訓練集內最常見的模式來填補空白，進而發明不必要的抽象層與重複的髒代碼，最終導致 AI 寫出來的程式碼連 AI 自己都無法理解。
+
+### 2. 7N 節點物理邊界校正
+
+感謝您的即時糾偏，我已將 7N（節點名稱 `TW075717N`）的物理拓樸在聯邦法典中重新鎖定：它是一台**由公司派發、透過手機熱點直連外網的 DMZ（非軍事區）頻外審查節點**。
+
+這意味著我們在設計 `tasks.md` 與 `AGENTS.md` 時，必須在 7N 戰場上施加絕對的**只讀防禦（Read-only Sandbox Constraints）**：
+
+```markdown
+[7N 節點物理防禦邊界]
+- 允許動作：讀取 Heptabase 視覺白板[cite: 9]、透過 NotebookLM 進行中英規格轉譯、執行 `spectra validate`[cite: 2, 12]。
+- 絕對禁止：在 7N 原地進行 Dashboard（PJ-25）的核心程式碼與資料庫 Mutation。
+-  escalation 路由：任何涉及代碼變更的實體任務，必須透過 Git 提交合約（staged-only）將變更案路由回 5P 閘道器發射。
+
+```
+
+### 3. 仿效 `awesome-copilot` 建立乾淨的資料分層模型
+
+在 GitHub 官方開源的 `awesome-copilot` 治理架構中，他們採用了極度嚴格的 **「源資產與發佈層分離（Source-to-Catalog Pipeline）」** 設計。
+
+這完全解答了您關於資料分層的焦慮，我們不該把 `player.json` 等遊戲化投影塞入全域狀態機，而是應建立嚴格的三層 SSOT 真相結構[cite: 3, 5]：
+
+```text
+聯邦資料分層治理拓樸 (Data Layering Matrix)
+├── 1. 治理與變更真相層 (SSOT) ── registry/state.yaml (由 OpenSpec 與 doc-regulation 強制看管)[cite: 3, 5]
+├── 2. 任務狀態佇列層 (Queue) ── registry/tasks/*.yaml (機器可讀且具備 Exit Code 驗證之排程)[cite: 5]
+└── 3. 遊戲化與外觀投影層 (Projection) ── nexus_dashboard/data/gamification_state.json (純私域 local data)[cite: 6, 7]
+
+```
+
+### 4. 算力突變下的 Token 財務優化策略
+
+面對 2026 年 6 / 1 算力市場的計費調整，我們必須將「規劃者（Planner）」**與**「執行者（Worker）」的算力模型進行物理性拆分，以達到最高投資報酬率（ROI）：
+
+| 算力維度 | 建議配置方案 | 核心技術理由 | 預期止損效果 |
+| --- | --- | --- | --- |
+| **高階思維 (Planner)** | 啟用 OpenAI Pro / Claude 思考版 ($20/mo) | 專職處理 Phase 1 (Specify) 與 Phase 2 (Design)，在網頁端與 Agy 進行邊界拷問，不盲目注入實體工作樹。
+
+ | 消除真空推理，確保規格合約 100% 正確。
+
+ |
+| ** inline 補全 (Worker)** | 保留並活用公司現有的 GitHub Copilot 企業額度 | 降低個人訂閱成本。利用 `copilot-instructions.md` 嚴格限縮 Allowed Paths，只讓它在指定的細粒度 tasks 下充當機械打字員[cite: 2, 11]。 | 避免全域上下文污染，拒絕 AI 自行擴張[cite: 2, 5]。 |
+
+---
+
+## 🚀 破局行動
+
+既然 Heptabase research 文件（v1.4.0 / CLI `0.4.x`）尚未完成跨域同步，我們今夜在 7N 特區（公司筆電）上**絕不啟動任何自動化代碼變更**[cite: 2, 3]。我們只使用 Agy CLI 的 `Discuss Mode`（只讀思考模式），將 `formalize-7n-bard-harness-profile` 的硬規格文件完整收攏[cite: 2, 12]。
+
+請將以下 Plan Mode 提示詞複製，投餵給 **7N（TW075717N）本地的 Agy CLI**：
+
+```markdown
+[System Directive: Twin-Sync 聯邦作戰框架 v3.6 Plan]
+[Mode: Plan | 7N 節點規格收攏與 Heptabase 本地定錨]
+
+[Strategic Objective]
+根據最高指揮官的最終裁決，我們今夜要在 7N 節點（DMZ 審查位格）上完成 `formalize-7n-bard-harness-profile` 變更案的規格收攏，並透過本地已安裝的 `heptabase-cli` 技能，將共識證據留痕，嚴禁任何實體程式碼寫入。
+
+[Execution Sequence (Strict Order)]
+1. **讀取既有合約與環境感知 (Fact-Check)**：
+   - 讀取 `openspec/changes/formalize-7n-bard-harness-profile/` 底下的 `proposal.md` 與 `design.md`。
+   - 讀取本機已落地的 `D:\Project\PJ-14_Twin-Sync\skills\heptabase-cli\SKILL.md`[cite: 9]。
+2. **依據 2026-06-01 裁決修正規格 (Spec Calibration)**：
+   - 啟動 `/spectra:discuss` 模式，修正 `design.md` 內關於 7N 的描述：確認 TW075717N 為公司資產，充當 Out-of-Band 審查節點，斷開與全域大腦備援的工程寫入權力[cite: 2, 3, 12]。
+   - 參考 `github-awesome-copilot.md` 的 `safe-outputs` 機制，在設計中為 Agy CLI 補建 `AGENTS.md` 的結構草案：
+     * 限制 Allowed Tools 僅限 `heptabase *`、`jq *`、`spectra validate`[cite: 2, 9, 11]。
+     * 任務顆粒度（Tasks）必須包含決定性的 Ralph-Loop 驗證行（如：Evidence: 執行特定單單元測試或指令），拒絕任何 fuzzy 散文[cite: 2, 5]。
+3. **活用 Heptabase CLI 進行知識沉澱 (Local Evidence Log)**：
+   - 呼叫本地 `heptabase card properties` 驗證 Lesson 14 note（ID: `1822e58f-feac-4e5e-b624-7e6a52447cfb`）的可達性[cite: 9]。
+   - 請將本輪關於「不依賴特定模型的開發流程、資料分層模型、以及 $20 算力分級止損戰略」的核心結論，以純文字 Markdown 格式，追加（Append）寫入到該 Heptabase 卡片或今日日誌中[cite: 2, 3, 9]。
+
+[Immutable Constraints]
+1. 嚴禁使用 Edit 或 Write 工具修改任何 `.py`、`.js` 或 `.html` 檔案。
+2. 執行完畢後，在終端機輸出 Heptabase CLI 寫入成功的 Response JSON，並產出暫存規格摘要 `7N_READINESS_REHEARSAL.md`[cite: 2, 9]。
+
+[Closing Protocol (維運收尾協定)]
+完成後，強制要求提示指揮官明日於 Solar 端呼叫 `doc-regulation` 與 `sync_federation.ps1`，確保 7N 的本夜規格收攏 100% 同步彩虹橋，不留任何認知斷層。
+
+```
+
+---
+
+## 💡 Prime 的結語
+
+指揮官，花錢買真正的工程教訓是資產，花錢做 AI 的隨意盲測是罪大惡極。請讓 Agy CLI 在 7N 沙盒內以這套「頭尾清楚」的硬規格合約完成點火，我將在 Heptabase 的實測數據流中等待您的戰報。
+
+---
+
+**資訊來源網址（Fact-Check Verifications）：**
+
+* 聯邦彩虹橋同步機制與 7N 節點非對稱雙模型定位：[D:\Project\PJ-14_Twin-Sync\docs\Federation_Rainbow_Bridge_Sync_SOP.md](https://www.google.com/search?q=Federation_Rainbow_Bridge_Sync_SOP.md) (法典內部正典路徑)
+* `github/awesome-copilot` 宣告式限制與 `staged` 管道架構：[https://github.com/github/awesome-copilot](https://github.com/github/awesome-copilot)
+
+* 敏捷交付與 Agentic Development 生態系演進探討：[https://www.facebook.com/share/p/1EL8wBjX4x/](https://www.google.com/search?q=https://www.facebook.com/share/p/1EL8wBjX4x/)
+* `formalize-7n-bard-harness-profile` 的 OpenSpec 變更案追蹤：[openspec/changes/formalize-7n-bard-harness-profile/](https://www.google.com/search?q=openspec/changes/formalize-7n-bard-harness-profile/)
