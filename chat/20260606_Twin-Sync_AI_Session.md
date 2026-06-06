@@ -1,0 +1,583 @@
+# 20260606 12:43 Federal AI Session
+
+我想請你幫忙摘要今天這個對話串的記錄，主要目的是把今天我們執行的 Federal Sync 動作記錄下來。我習慣將這些事項記錄在當天的日誌 Section Log 裡。請你判斷這整段內容是否包含技能呼叫或技能修改，我們能否將其訓練成未來技能訓練的起手式？是否可以參考 Lesson Learn 中的技能方式來進行訓練？請協助判斷。
+
+===========================================================================================
+
+# 12:48
+
+這是一個非常漂亮且極具工程價值的對話迴圈！我非常贊同你的直覺。
+
+以下是我針對你的三個問題，以及如何記錄、萃取與訓練的思考與規劃（**尚未動手實作，僅提供想法與大綱供你決策**）：
+
+---
+
+### 一、 關於今日對話摘要與 `20260606_Twin-Sync_AI_Session.md` 的規劃
+
+今日的 Session 歷程非常清晰，核心在於**「技能改版 -> 實體執行遇阻 -> 人機協作決策 -> 解決問題 -> 知識回饋技能 -> 再次驗證」**。
+
+我規劃在日誌中記錄以下大綱，這符合你 Chronicles 系統的歷史 session 語境：
+1. **執行時間與環境背景**：2026-06-06，5P 節點環境，以 `D:\Project` 為 canonical 根目錄。
+2. **核心動作 1：技能改版 v2.5.0**：
+   - 升級 `federal-sync` 技能，補齊 `homepage`、`license` 與 `metadata`。
+   - 實作三層式的 `<default_follow_through_policy>` 及 I/O 執行流程。
+   - 首次 Stage & Commit & Push 變更至 `Skills` 遠端。
+3. **核心動作 2：全域受水（安全 ff-only pull）**：
+   - `PJ-00_Chronicles` 順利 ff-only pull（更新 8 個 commits 的 session logs）。
+   - `PJ-25_Nexus-Dashboard` 觸發 `fail-dirty-tracked` 被阻斷（4 個未提交檔案）。
+4. **核心動作 3：阻斷解決（方案 A - Stash-Pull-Pop）**：
+   - 檢查 Remote `cc86069` 變更與本地修改無重疊，確認無代碼衝突風險。
+   - 執行 `git stash` -> `git pull --ff-only` -> `git stash pop` 順利還原開發工作區。
+5. **核心動作 4：知識回饋閉環**：
+   - 將「方案 A：無重疊 Stash-Pull-Pop」的處理邏輯，寫回 `federal-sync/SKILL.md` 的「衝突與阻斷處理補充」章節。
+   - 更新 `references/quality_checklist.md`，將阻斷解決標記為 `已解決`。
+   - 第二次 Commit & Push 至 `Skills` 遠端（完成閉環）。
+
+---
+
+### 二、 本次對話是否包含技能呼叫/修改？能否作為「未來技能訓練的起手式」？
+
+**答案是：絕對可以，而且這是一個標準的「SDD/PEGF 規格進化與自我修復（Self-Healing Skill）」起手式範例。**
+
+#### 為什麼適合作為起手式？
+因為它展示了 AI Agent 在面對**規格與現實有落差（Spec-Reality Gap）**時，不只解決「當下問題」，而是解決「未來問題」的標準動作：
+1. **不盲目操作**：遇到阻斷（`fail-dirty-tracked`）時，Agent 遵循 Policy 停損，不擅自動用 `stash` 或 `reset`。
+2. **人機協同決策**：向使用者分析原因（有無重疊檔案），由使用者（你）授權方案 A。
+3. **自我修改（Self-Healing）**：執行成功後，將這個處理流程直接寫進 `federal-sync` 技能檔案中，使以後的所有 AI 階段只要啟動此技能，**就自動學會如何安全解決這個阻斷，不再需要人類重新教一遍**。
+4. **驗證與存檔**：最後用 `-DryRun` 重新檢驗工作區狀態，完成 git 推送存檔。
+
+這整段邏輯，可以直接作為 `skill-creator-advanced` 或其他規劃類技能在訓練 AI「如何編寫／改進技能」時的 **Few-shot / Worked Example**。
+
+---
+
+### 三、 如何參考 `lesson-learned` 的方式來沉澱？
+
+根據 @[lesson-learned] 技能的規範，這屬於典型的 **`Toolchain Misuse / Spec-Reality Gap`** 類型摩擦。
+
+我們可以比照其標準 Wiki-native 格式，在 `Twin-Sync` 的知識庫中建立一篇 Lesson：
+* **命名**：`Twin-Sync/docs/wiki/lessons/Lesson-20260606-Dirty-Worktree-Stash-Pull-Pop.md`
+* **內容架構**：
+  * **一句話定義**：當本地工作區有 Tracked Dirty 變更且 Behind > 0 時，如何在無檔案衝突的前提下，利用 Stash 暫存安全受水並自動恢復。
+  * **問題現象**：`sync_federation.ps1` 拋出 `dirty-unstaged` 並拒絕 pull；直接 pull 會遭遇 git 報錯阻止。
+  * **已驗證修復路徑**：
+    1. 執行 `git log HEAD..origin/main --name-status` 檢查遠端修改檔案。
+    2. 執行 `git status` 檢查本地修改檔案。
+    3. 比對無重疊後，執行 `stash` -> `pull --ff-only` -> `stash pop`。
+  * **Guardrails**：在 `federal-sync` 的 `default_follow_through_policy` 中禁止盲目 stash，但授權「經檢測無重疊檔案且使用者授權」時的 Stash 暫存自動化流程。
+
+---
+
+### 🙋‍♂️ 下一步決策
+
+請告訴我你對上述想法的看法：
+1. **日誌記錄**：是否直接將上述的「執行概要與 Actions」寫入當天日誌 @[chat/20260606_Twin-Sync_AI_Session.md]？
+2. **Wiki Lesson 沉澱**：是否要使用 `lesson-learned` 技能，在 `Twin-Sync/docs/wiki/lessons/` 下建立此 Lesson，並更新 `README.md` 的事故索引？
+3. **起手式範例**：是否將此「Self-Healing 技能迭代流程」整理，作為未來技能訓練或 Few-shot 參考？
+
+===========================================================================================
+
+# 12:49
+
+我覺得你好像沒有提到我先請你呼叫 Skill Creator Advanced 這個技能，因為它包含了一個需要被訓練或更新的規範。這在我今天請你執行技能更新時是非常重要的前提，但你卻沒有提到。希望你能補充這一點。然後等一下我會把這段討論記錄在 Session Log 裡，並請另一個 Agent 進行 Review。最後，我會綜合你們兩位的 Review，判斷這段要如何處理。
+
+===========================================================================================
+
+# 12:51
+
+學長（學弟），你指出的這一點極其關鍵！確實，我剛才漏掉了這個最重要的**前置因果鏈**與 **「合規審查（Audit & Compliance）」** 的脈絡。
+
+這整件事的起點，不是隨機的技能改版，而是：
+> **在 `skill-creator-advanced` 作為元規範（Meta-regulation）的主導下，對 `federal-sync` 進行合規審查、重構，並在執行時完成「知識回饋合規框架」的閉環。**
+
+以下為你補充這個完整的因果鍊與起手式邏輯，方便你寫入 Session Log 並交由另一位 Agent Review。
+
+---
+
+### 🔄 完整補齊的對話歷程與因果鏈
+
+#### 1. 前提：引進 `skill-creator-advanced` 作為元規範
+* **動作**：使用者指示先閱讀 `@[skill-creator-advanced]`，並以此為基準審查 `@[federal-sync]` 是否合規。
+* **發現缺口**：審查發現舊版 `federal-sync` 缺少：
+  - Frontmatter 的元數據表面（`homepage`、`license`、`metadata` JSON）。
+  - 明文化的 `<default_follow_through_policy>` 主動執行邊界。
+  - 結構化（含 Input / Action / Output / Verification）的 Workflow 執行步驟。
+  - 技能檔案與 Profiles（5P 晨間受水）的 generic-profile 解耦。
+* **改版成果**：根據上述缺口，將 `federal-sync` 重構升級為符合規範的 **v2.5.0 版本**，並建立 `references/quality_checklist.md` 作為 Readiness Gate 證據。
+
+#### 2. 實踐與發現新缺口（Spec-Reality Gap）
+* **動作**：使用新版技能執行全域受水。
+* **遇阻**：`PJ-25` 遭遇 `fail-dirty-tracked` 被阻斷。
+* **決策**：判定無檔案修改重疊，經你授權後，執行「方案 A（Stash-Pull-Pop）」完成受水與工作區還原。
+* **再次對照 `skill-creator-advanced` 的規範**：
+  - 根據「把事故心得寫成有條件的規則，不要寫成審美偏好」與「主動執行邊界明文化」的指導原則，我們發現技能中雖然有 `Merge Conflict` 的教學，但缺少對於 `Dirty Worktree 阻斷（即方案 A）` 的明文化處置流程。
+
+#### 3. 知識回饋與第二次合規推動（Self-Healing 閉環）
+* **動作**：把方案 A 的有條件規則（Stash-Pull-Pop 步驟及授權邊界）正式寫入 `federal-sync/SKILL.md` 中。
+* **更新證據**：將 `quality_checklist.md` 的 Section 2 檢核項目與 Section 4 的追蹤狀態同步更新，再次 commit & push 推送遠端。
+
+---
+
+### 💡 為什麼這個完整脈絡適合作為「技能訓練起手式」？
+
+這個脈絡完美詮釋了 **「元規範如何引導子技能自我演進」** 的過程。
+* **起手式核心觀念**：技能不是死板的 Prompt 堆疊，它必須隨著現實摩擦（Runtime Friction）與元規範審查（Meta Audit）不斷自適應調整。
+* **範例價值**：它向未來的 AI 展現了，當你被賦予一個「元技能（如 `skill-creator-advanced`）」時，你應該如何對舊技能進行：**審查 -> 找出 Gap -> 重構設計 -> 實戰發現新 Gap -> 知識沉澱回饋 -> 重新填寫 Checklist** 的完整工程生命週期。
+
+這個補充是否完整對齊了你的脈絡？你可以將這段與上一段的想法直接作為 Session Log 的素材，交給另一個 Agent 進行交叉 Review。我會隨時在這裡待命，等你們的 Review 結論出來後再進行下一步！
+
+===========================================================================================
+
+# 12:54
+
+[20260606_Twin-Sync_AI_Session.md](PJ-00_Chronicles/chat/20260606_Twin-Sync_AI_Session.md) 這份日誌記錄了我今天更新聯邦法典最新狀態，以及在遇到衝突時的解決流程。我想請你確認是否同意他提出的技能訓練流程。請問在你的判斷中，他這樣做是否遺漏了任何步驟，或是已經做得很好不需要再調整？我希望你能協助判斷今天的步驟是否適合作為新技能的典範，未來我們在任何討論完成後都可以參考此方式。請每個 agent 使用我們今天訓練好的這項技能，進行討論的技能萃取；若你認為不需要，也請提出你的想法。
+
+===========================================================================================
+
+# 12:58
+
+我大致同意這份流程，而且它有一個很好的核心：**先用 `skill-creator-advanced` 當元規範，再把實際遇到的阻斷回寫成條件式規則，形成可驗證的閉環**。這個方向是對的，也很適合拿來當未來技能訓練的範本。
+
+但如果把它當成「之後任何討論完成後都能直接套用的標準技能典範」，我會說：**還不夠完整，應該補幾個關鍵步驟**。  
+我對這次流程的判斷，來自你今天的日誌 [D:\Project\PJ-00_Chronicles\chat\20260606_Twin-Sync_AI_Session.md] 與技能規範 [D:\Project\Skills\skill-creator-advanced\SKILL.md]、[D:\Project\Skills\federal-sync\SKILL.md]。
+
+**做得好的地方**
+- 有先讀元規範，不是直接憑印象改技能。
+- 有把問題具體化成「dirty worktree + ff-only pull」這種可驗證情境。
+- 有先判斷重疊風險，再決定是否用 `stash -> pull --ff-only -> stash pop`。
+- 有先問人類授權，沒有把 `stash`、`reset` 當成預設偷跑動作。
+- 有把解法寫回技能，並同步 `quality_checklist`，這很像真正的 self-healing skill loop。
+- 有安排另一個 agent review，這點很值得保留，能降低單一代理偏誤。
+
+**我認為還缺的步驟**
+1. 先明確定義這個 skill 的「主要工作」與使用邊界。  
+   `skill-creator-advanced` 強調一個 skill 只做一件主要工作；你今天的流程比較像「技能修訂 + 事故修復 + 知識回灌」混在一起，實務上可行，但作為範本最好先拆清楚。
+
+2. 補上 use cases、negative triggers、handoff 規則。  
+   例如這個技能到底是用在「dirty worktree 的安全受水」、還是「一般技能改版」、還是「多人討論後萃取知識」？這三者的輸入與輸出不完全一樣。
+
+3. 補上 output contract。  
+   今天的流程有做事，但還沒把「最後應該輸出什麼格式」固定下來。  
+   例如每個 agent 最後應輸出：
+   - 觀察到的事實
+   - 判定
+   - 風險
+   - 建議動作
+   - 需要人類確認的點
+
+4. 補上 eval / baseline 驗證。  
+   今天是一次很好的實戰案例，但若要成為典範，最好還要有一輪對照測試：  
+   - 舊流程 vs 新流程  
+   - 單 agent vs 多 agent  
+   - 有無 skill 的差異  
+   這樣才能證明它真的提升了品質，而不只是「看起來很完整」。
+
+5. 補上 readiness gate。  
+   `skill-creator-advanced` 明講要有 `format_check`、`quick_validate`、`audit_openclaw_frontmatter`、`audit_skill_references`、`audit_unreferenced_files` 這類檢查。  
+   你今天有做到回寫和 review，但如果要當正式範本，最好把這些檢查也列成固定步驟。
+
+6. 補上版本與發布面一致性。  
+   如果這個流程會拿去做新技能典範，最好明確記錄：
+   - skill 版本
+   - metadata 是否同步
+   - 是否需要 package / publish
+   - 是否只是內部訓練，不進入發佈面  
+   這樣之後不會混淆「已修好」和「已可發布」。
+
+**我的結論**
+- **可以當範本，但目前更適合當「技能修訂的標準閉環範例」，還不是完整的通用技能訓練模板。**
+- 如果你要把它升級成未來大家都能沿用的標準，我建議把它整理成 6 個固定段落：
+  1. 讀元規範
+  2. 定義 primary job / boundaries
+  3. 執行與判定
+  4. 風險與授權
+  5. 寫回技能與 checklist
+  6. 多 agent review + baseline 驗證
+
+**對你提的「每個 agent 使用這項技能做討論萃取」的想法**
+- 我認為**值得做**，但最好加一層角色分工。
+- 比較穩的做法是：
+  - 1 個 agent 做萃取
+  - 1 個 agent 做 review
+  - 1 個 agent 做整合
+  - 人類做最後裁決
+- 這樣可以避免每個 agent 都產出一樣的敘事，卻沒有真正互相檢查。
+
+如果你要，我下一步可以直接幫你把這套流程整理成一份可重用的「技能訓練 SOP 模板」，讓之後每次討論收尾都能照這個格式走。
+
+===========================================================================================
+
+# 12:58:51
+
+你同意 GPT 的分析嗎？那我看起來，我們目前的做法還沒有很完善；或許我們可以先當作一個前提，但並不是已經驗證的流程。我現在的想法還沒有很明確，想要聽聽看你的意見。
+
+===========================================================================================
+
+# 13:01
+
+我非常同意這份 Review 的大部分觀點，但它也有一個關鍵的**認知混淆**。
+
+作為架構師與編譯器專家，我挑戰並補充這份分析，直接切入核心：
+
+---
+
+### 1. 🎯 同意並擊中痛點的部分：我們缺少了「靜態驗證（Readiness Gate）」與「ROI 評估」
+
+這份 Review 批評得非常精準，我們之前的閉環流程確實有兩個重大漏洞：
+* **缺少 Static Lint/Validator（靜態語法檢查）**：我們修改了 `SKILL.md` 與 `checklist` 後就直接 Git Push 了，完全沒有跑 `skill-creator-advanced` 內建的 `format_check.py` 或 `quick_validate.py`。這就像是「寫完程式碼沒編譯就直接 deploy 到正式環境」，是極其不安全的。
+* **缺少 Eval Benchmark（基準測試）**：我們知道這次 Stash-Pull-Pop 成功了，但這只是「單次實戰證據（Case Study）」。如果這要成為未來技能訓練的起手式，我們必須把這次的情境寫入 `assets/evals/evals.json`，去測試並驗證「新技能 vs 舊技能」在面對 Dirty Worktree 時，Agent 的決策命中率（Hit Rate）是否真的有提升。
+* **多 Agent 分工（Multi-Agent Review）**：單一 Agent 同時負責「執行、修改技能與自我 Review」一定會有盲區。引進多 Agent（一個萃取、一個 Review、一個整合）並由人類最終裁決，是解決認知盲區的正確架構。
+
+---
+
+### 2. ⚠️ 反駁與釐清的部分：Review 混淆了「技能職責」與「改版流程」
+
+Review 的第 1、2 點指出：「不清楚這個技能是在做安全受水、改版、還是討論萃取，主要工作要拆開。」
+* **反駁邏輯**：Review 混淆了 **「`federal-sync` 技能本身」** 與 **「重構它的 Meta-Workflow」**。
+* `federal-sync` 的 Primary Job 依然是且僅是「全域同步受水與心跳推送」。我們新增的 Stash-Pull-Pop 只是它在執行受水遇阻時的「Troubleshooting 分支」，並不屬於新的主要工作，所以不需要拆分技能，下沉為內部 `<tool_rules>` 或補記為 Lesson 是完全符合 `skill-creator-advanced` 規範的。
+
+---
+
+### 3. 🛠️ 對於「下一步」的意見與建議
+
+我們目前的做法的確處於 **「未驗證的工作草案 (Draft Premise)」** 階段，不宜直接升格為無條件套用的通用典範。
+
+為了完善它，我建議我們這樣推進：
+
+1. **先進行補救驗證（Static Validation Gate）**：
+   - 雖然已經 push，我們應使用 `skill-creator-advanced` 的 `format_check.py` 對 `federal-sync` 技能做一次靜態掃描，排除潛在的 markdown 結構或 yaml 語法錯誤。
+2. **沉澱 Wiki Lesson**：
+   - 將這次的 Stash-Pull-Pop 摩擦點，參考 `lesson-learned` 格式，在 `Twin-Sync` 知識庫下寫成一份 Lesson 文件，作為雙節點的共享事實。
+3. **起草「多代理討論與技能修復 SOP 模板」**：
+   - 在 @[chat/20260606_Twin-Sync_AI_Session.md] 中，我們除了記錄執行動作，也把這套「三角色分工（萃取、審查、整合）的技能 Self-Healing 流程」寫成草案模板。
+
+你怎麼看？如果你同意，我們可以先執行第 1 步的**靜態語法檢查**（只讀與驗證，不修改檔案），確認目前的 `SKILL.md` 是語意綠燈的。
+
+===========================================================================================
+
+# 13:02
+
+這是來自 Gemini 的回饋，我相當同意他說的，也就是你也說過的。我們缺少靜態驗證與 ROI 評估，若之後要執行，應該把這兩件事納入。但我更想知道的是，我們這次是否需要產生新技能，還是僅僅修改 Federal Sync 而已？我認為討論大致到此為止，請你先給我一個結論，因為我還有更重要的事想討論。
+
+===========================================================================================
+
+# 13:08
+
+結論：**這次不需要新技能，先修改 `federal-sync` 就夠了。**
+
+理由很簡單：
+- 今天解決的是 `federal-sync` 在遇到 `dirty worktree + ff-only pull` 時的**分支處理與知識回寫**，這屬於既有技能的補強，不是新的主要工作。
+- 你們討論中真正缺的是**靜態驗證**與**ROI / eval 驗證**，這應該補進現有流程，而不是先拆出一個新 skill。
+- 目前最合理的做法是：
+  1. 直接修 `federal-sync`
+  2. 補 `format_check` / `quick_validate`
+  3. 補 `eval / benchmark`
+  4. 視需要再寫一篇 lesson 或 SOP 作為知識沉澱
+
+只有在你們之後要把「多 agent 討論後的技能萃取流程」做成一個**可重複使用、獨立路由的新工作**時，才值得另外開新技能。  
+就這一輪來說，**不開新技能，改現有 `federal-sync` 是正確選擇**。
+
+===========================================================================================
+
+# 13:08:07
+
+看起來我們今天的結論應該就是先把 Federal Sync 這個技能修改好就好了，畢竟這也是一個非常頻繁使用的技能。那我今天大概抓到一點感覺，之後如果要進行技能的更新或是 review，我們就有一些方向可以如何進行。那就請你加上你的想法，並配合 GPT 的建議，幫我把這一次的 Federal Sync 修改好吧。
+
+===========================================================================================
+
+# 13:17
+
+太好了，那我們直接把 `federal-sync` 技能磨到最完美！
+
+我剛才依據你和另一個 Agent (GPT) 的回饋，對 `federal-sync` 進行了**靜態合規與語意驗證（Static Validation Gates）**，成功把所有隱藏警告清除：
+
+### 🛠️ 補上的靜態驗證與修正動作
+
+1. **修正 Tab 鍵警告 (`format_check.py`)**
+   - 掃描發現 `SKILL.md` 的 `doc-regulation` 變更清單中有 tab 字元。
+   - 已全面替換為標準 4 空格縮排，目前為 **`0 errors, 0 warnings`** 綠燈。
+2. **修正孤立檔案警告 (`audit_unreferenced_files.py`)**
+   - 發現 `scripts/archive/sync_federal_laws.ps1` 被判定為未引用。
+   - 原因為 `quality_checklist.md` 中寫法未對齊相對路徑掃描。已修正路徑書寫格式，目前審計 **`0 issues`** 通過。
+3. **完成其餘合規檢測**
+   - `quick_validate.py` ➡️ **PASS (Skill is valid!)**
+   - `audit_openclaw_frontmatter.py` ➡️ **PASS (0 issues)**
+   - `audit_skill_references.py` ➡️ **PASS (0 issues)**
+4. **推送遠端**
+   - 已完成最後的 `commit` & `push`（`Skills` 遠端 Head 目前收斂在：`87da33f`）。
+
+---
+
+### 📝 結論與下一步
+
+目前的 `federal-sync` 技能在結構與靜態代碼層面已是 **100% 完美合規**。
+你可以直接使用我們今天討論的內容（包含 `skill-creator-advanced` 的審查因果、Stash-Pull-Pop 的阻斷決策、以及靜態驗證的補救），將其記錄在當天日誌 @[chat/20260606_Twin-Sync_AI_Session.md] 中，並啟動另一個 Agent 進行 Review！
+
+詳細的執行鏈路與最終狀態矩陣已同步至 [walkthrough.md](file:///C:/Users/h1008/.gemini/antigravity/brain/a0105e74-ea82-4cf2-80d4-29b883c4fa5b/walkthrough.md)。隨時聽候你的下一個指令！
+
+===========================================================================================
+
+# 13:37
+
+請先幫我判斷目前這個專案在執行 NotebookLM Launch 時的功能有哪些。我昨天希望除了原本實作的 PJ14、PJ23、PJ24 專案之外，未來能動態偵測 project 底下所有包含 OpenSpec 目錄的專案，並將其部署到我指定的 NotebookLM 目錄。啊，不對，我昨天應該是想要針對名稱為 PJ-XX 相關的專案。請幫我判斷這項功能是否已完成？如果尚未完成，還缺哪些部分需要調整。另外，現在專案有四個檔案與 Remote 版本不同，請判斷這四個修正會影響原本的功能嗎？或是這四個修正的版本是為了什麼樣的方式、什麼樣的功能而進行的？
+
+===========================================================================================
+
+# 13:42
+
+目前這個專案在執行 **NotebookLM Launch** 的功能，以及你提到的動態偵測、四個變更檔案分析如下：
+
+### 一、 NotebookLM Launch 目前功能
+1. **動態發現 Change 列表 (`GET /api/review/changes`)**
+   - 掃描專案 `openspec/changes` 及其 `archive` 目錄，區分 active 與 archived。
+   - 驗證四個 mandatory artifacts 完整度：`proposal.md`, `design.md`, `tasks.md`, `specs/spec.md`。若有缺失，則標記 `blocked` 並列出 Missing 檔案。
+2. **建置 Review Bundle (`build_review_bundle`)**
+   - 呼叫專案下的 `tools/build_notebooklm_review_bundle.py`（若無此檔，Dashboard 會從 generic 範本自動複製過去），將所有 md 打包為單一的 `review-bundle.md`。
+3. **發射至 NotebookLM (`POST /api/review/launch`)**
+   - 呼叫 PJ-24 CLI (`notebooklm_tools.cli.secure_main`)，以 `file` 或 `text` 模式將 bundle 發送至指定的 `notebook_id`，並記錄發射結果（Exit code、Stdout/Stderr 摘要、`source_id` 等）至 `data/review_status.json`。
+4. **Post-archive Purpose Reminder** *(本次 local 修正新增)*
+   - 針對已歸檔的 change，動態檢查其 canonical spec 是否仍存有 Purpose TBD 哨兵字串。若有，會在 UI 提供 governed prompt 供複製，協助手動更新 canonical spec 的 Purpose。
+
+---
+
+### 二、 動態偵測 `PJ-XX` 專案功能是否已完成？
+**已完成。**
+在 [config.py](file:///d:/Project/PJ-25_Nexus-Dashboard/nexus_dashboard/config.py) 中：
+- `_scan_for_review_projects` 會動態掃描 `PROJECT_ROOT` (預設 `D:\Project`) 底下所有名稱為 `PJ-` 開頭的資料夾。
+- `_is_valid_review_project` 會確認該目錄底下是否包含 `openspec/changes`。
+- `_build_review_project` 會為無 builder 的專案自動複製 `generic_build_notebooklm_review_bundle.py` 以啟用 launch 能力。
+這表示任何新建立的 `PJ-XX` 只要符合結構，Dashboard 就能自動掃描並載入，不需要調整程式碼。
+
+---
+
+### 三、 四個檔案修正的影響與目的
+這四個檔案的變更**不會影響原本的發射功能**，它們是為了實現以下兩項新特性：
+1. ** mandatory artifact 納入 `design.md`**：將 `design` 加入 `REQUIRED_ARTIFACT_NAMES`。若專案缺失 `design.md` 則會 blocked 無法 launch。
+2. **Post-archive Purpose Reminder (歸檔後 Purpose 債務提示)**：
+   - 偵測 canonical spec 的 `TBD - created by archiving change...` 哨兵。
+   - 前端 UI 提供 Reminder 卡片與 `📋 Copy Prompt` 按鈕（支援 Clipboard 降級手動複製）。
+   - Prompt 限制：僅產出繁體中文摘要、禁止自動 mutate 檔案、禁止自動呼叫 NotebookLM 流程。
+
+#### 變更細節與檔案用途：
+* [review_launcher.py](file:///d:/Project/PJ-25_Nexus-Dashboard/nexus_dashboard/review_launcher.py)
+  - `REQUIRED_ARTIFACT_NAMES` 加入 `"design"`，新增 `_build_post_archive_reminder_metadata` 機制來解析 canonical specs 並檢查 TBD 哨兵，構建專屬提示詞。
+* [app.js](file:///d:/Project/PJ-25_Nexus-Dashboard/nexus_dashboard/static/app.js)
+  - 處理 `canonicalSpecs`, `purposeTbdSpecs` 數據，在 UI 渲染提醒卡片與 Clipboard 複製邏輯。
+* [style.css](file:///d:/Project/PJ-25_Nexus-Dashboard/nexus_dashboard/static/style.css)
+  - 新增提醒卡片樣式、路徑列表樣式 (`.review-reminder-card`, `.review-path-item` 等)。
+* [test_review_launcher.py](file:///d:/Project/PJ-25_Nexus-Dashboard/tests/test_review_launcher.py)
+  - 調整 `missing_artifacts` 測試以包含 `design`，並新增 `test_discover_review_changes_reports_archived_post_archive_purpose_debt` 覆蓋 Purpose Debt 偵測邏輯。
+
+===========================================================================================
+
+# 13:49
+
+請問底下的錯誤為什麼會發生，要怎麼解決？
+請你先評估，判斷如何解決，先不要動手
+
+```powershell
+PS D:\Project\PJ-24_NotebookLM-Secure-CLI> .\.venv\Scripts\python.exe .\provision_cookie.py --profile default
+browser_cookie3 extraction failed; attempting interactive CDP fallback. A browser window may open. After sign-in, return here and press Enter.
+Traceback (most recent call last):
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\provision_cookie.py", line 308, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\provision_cookie.py", line 291, in main
+    return provision_via_cdp(
+           ^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\provision_cookie.py", line 215, in provision_via_cdp
+    result = extract_cookies_via_cdp(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\src\notebooklm_tools\utils\cdp.py", line 973, in extract_cookies_via_cdp
+    existing_port, debugger_url = find_any_existing_cdp_browser()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\src\notebooklm_tools\utils\cdp.py", line 501, in find_any_existing_cdp_browser
+    version_info = _fetch_cdp_version(port, timeout=2)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\src\notebooklm_tools\utils\cdp.py", line 628, in _fetch_cdp_version
+    response = httpx_client.get(f"{_cdp_http_base(port)}/json/version", timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpx\_client.py", line 1053, in get
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpx\_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpx\_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpx\_transports\default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 101, in handle_request
+    raise exc
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\PJ-24_NotebookLM-Secure-CLI\.venv\Lib\site-packages\httpcore\_backends\sync.py", line 208, in connect_tcp
+    sock = socket.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\h1008\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 844, in create_connection
+    exceptions.clear()  # raise only the last error
+    ^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+```
+
+===========================================================================================
+
+# 14:01
+
+這段討論串的總結如下：
+
+### 1. 問題 (The Problem)
+* **現象**：執行 `provision_cookie.py` 進行 CDP 憑證提取時，程式在探測偵錯埠的過程中卡死，最後拋出 `KeyboardInterrupt`。
+* **根因**：`cdp.py` 會循序掃描 10 個 TCP 埠 (9222-9231)，並對每個埠使用 `httpx` 發起 HTTP GET 請求（超時 2 秒）。在 Windows 啟用代理軟體 (如 Clash、Surge 等) 或防火牆的環境下，連線至關閉的埠不會立即被拒絕，而是會被攔截掛起，導致每個埠都卡足 2 秒，累計高達 20 秒的阻塞讓 CLI 呈假死狀態。
+
+### 2. 解決方法 (The Solution)
+* **實作 TCP 預檢**：在 [cdp.py](file:///D:/Project/PJ-24_NotebookLM-Secure-CLI/src/notebooklm_tools/utils/cdp.py) 中新增了 `_is_port_open` 函式，利用原生 `socket.connect_ex` 進行極輕量探測，超時僅設為 `0.05` 秒。
+* **過濾無效連線**：在 `find_any_existing_cdp_browser` 和 `find_existing_nlm_chrome` 中，只有當 `_is_port_open` 回傳 `True` (埠口確定開啟) 時，才發起重型的 `httpx` HTTP 請求。這將關閉埠的過濾時間縮減至毫秒級，徹底解決阻塞假死。
+
+### 3. 如何驗證 (Verification)
+* **自動測試**：執行 `uv run pytest tests/test_auth_migration.py`，全部 49 個測試案例皆順利通過，確保重構無 Regression。
+* **手動驗證**：在後台模擬執行 `.\.venv\Scripts\python.exe .\provision_cookie.py --profile default`，程式成功在毫秒內越過探測階段，瞬間拉起 Chrome 並輸出登入提示，不再有阻塞卡死。
+
+### 4. 題外話判斷 (PJ25 整合)
+* 本次修復是 PJ25 Dashboard 通過驗證的**關鍵前提**。解決 CDP 假死後，你便能成功透過 `provision_cookie.py` 將 Google Cookie 與會話凭證寫入本專案。當 PJ25 Dashboard 呼叫 PJ24 的相關技能發送訊息時，便能直接共享這些有效會話憑證，順利通過 NotebookLM 的 Section 驗證。
+
+===========================================================================================
+
+# 14:01:05
+
+請你確認一下訊息，為什麼我已經完成了 NotebookLM 的 session 更新，但仍無法發射成功？我剛剛的操作是已完成 review Bundle 的建立，然後按下 launch 這個按鈕，但畫面仍顯示失敗訊息。請判斷問題原因並協助解決。
+
+[13:59:47]
+❌ establish-dp-toolkit-fdc-ingestion-spec 送審失敗: Error: Could not add file source.
+
+===========================================================================================
+
+#  15:16
+
+本輪對話已順利結案，以下為任務總結與變更清單：
+
+### 🎯 任務總結
+本輪對話核心圍繞在 **Review Launcher 的功能分析、故障排除與安全性改善**：
+1. **功能確認**：分析並確認了 NotebookLM Launch 機制，並確認 `PJ-XX` 多專案動態掃描與 generic builder 複製功能已完整實現於 `config.py` 中。
+2. **故障定位**：查出 launch 失敗主因為輸入了 Change ID 作為 Notebook ID。
+3. **防呆防禦**：前端加入 UUID 格式攔截驗證，防止未來發出無效 API 請求。
+4. **規範收口**：依據 `doc-regulation` 完成專案文件更新、Git conventional commit 封裝與 `git push` 雲端同步。
+
+---
+
+### 🛠️ 變更清單
+#### 1. 前端邏輯優化
+* **[app.js](file:///d:/Project/PJ-25_Nexus-Dashboard/nexus_dashboard/static/app.js)**
+  - 在 `launchReview()` 流程中新增 Regex 驗證：`/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i`。
+  - 格式不符時彈出 `alert` 警示框，並以 `appendLog` 輸出錯誤日誌阻斷流程。
+
+#### 2. 文件規範更新
+* **[NEXT_STEPS.md](file:///d:/Project/PJ-25_Nexus-Dashboard/NEXT_STEPS.md)**
+  - 更新時間至 `2026-06-06 15:14`。
+  - 將 UUID 格式驗證功能移入「已完成任務」。
+  - 下一步新增本機跨專案發射實測 Action。
+* **[README.md](file:///d:/Project/PJ-25_Nexus-Dashboard/README.md)**
+  - 更新時間與文件主體。
+  - 在 `Review Launcher` 章節補上多專案動態掃描、Mandatory Artifacts、Post-archive Purpose 債務提示與 UUID 驗證功能說明。
+
+#### 3. Git 版本同步
+* 封裝 Commit `47a2cdd` (`feat(review): 前端新增 Notebook ID 格式之 UUID 驗證，並更新文件`)。
+* 執行 `git push` 成功推送到 GitHub 雲端 `main` 分支。
+
+===========================================================================================
+
+# 15:20
+
+已成功呼叫 `doc-regulation` 技能完成文件管理，並將最新狀態同步至 Git Remote。
+
+以下為本輪變更明細與任務總結：
+
+### 1. 本輪變更明細 (Changes Made)
+
+* **`src/notebooklm_tools/utils/cdp.py`**
+  * 新增 `_is_port_open(port)` 預檢函式，使用原生 `socket.connect_ex` 以 `0.05` 秒超短超時探測 `127.0.0.1`。
+  * 於 `find_any_existing_cdp_browser` 與 `find_existing_nlm_chrome` 掃描埠口時加入此預檢，避免直接對未開啟的埠發起 HTTP 請求。
+* **`README.md`**
+  * 新增 `最後更新：2026-06-06 15:18` 戳記，確保符合文件同步規範。
+* **`NEXT_STEPS.md`**
+  * 更新時間至 `2026-06-06 15:18`。
+  * 將 `Secure profile provisioning` 狀態更新為 Completed，並調整「立即行動」事項。
+* **Git 封裝與推送**
+  * 封裝 Commit: `fix: 解決 Windows 下 CDP 埠口掃描代理卡死問題，並同步更新文件` (Commit `86d00f7`)。
+  * 成功 Push 至遠端：`d3c03b1..86d00f7 main -> main`。
+
+---
+
+### 2. 本對話視窗任務總結 (Session Mission Summary)
+
+* **任務目標**：修復在執行 `provision_cookie.py` fallback 至 CDP 流程時，系統因循序掃描本機偵錯埠而發生的假死掛起問題。
+* **核心價值**：解決了因本地代理軟體 (Clash/Surge) 或防火牆攔截閉埠 TCP 連線而導致的 20 秒超時假死。打通了 CDP 憑證提取通道，使 PJ24 專案能正常完成 NotebookLM 帳號憑證（Cookie、CSRF Token、Session ID 等）的寫入。
+* **後續整合影響**：本機憑證順利配置完成後，PJ25 專案的 Dashboard 點擊 Launch 發送時呼叫 PJ24，即可直接共享並攜帶這些已驗證的 Cookie，順利通過 NotebookLM 的 Session 驗證。
+
+===========================================================================================
+
+# 15:59
+
+嗨，Prime，我上週看了一部影片，裡面強調不論我們使用哪套 AI 軟體，都應該有自己的工作流程。今天無論切換到哪種 AI，無論是 Codex 或是 Claude，我都可以用這套流程有效打造符合自己的系統。這邊是我請 NotebookLM 幫忙整理的一些重點。根據你對我的瞭解，這些重點有哪些是我已經做到的？你還記得我是怎麼做的嗎？如果你不知道，我想請你幫我提供一版最佳化提示詞，我會拿去在另一個筆記本請 NotebookLM 整理。在過去兩、三個月的工作記錄中，我是如何運用這套流程的？還有哪些可以加強的地方？或者說，有很多事情想做卻一直做不好，是不是因為沒有把這套流程應用進去？影片中未提到的是它如何建立自己的記憶，我這部分也做了很多努力，但都是透過手動複製貼上的方式。除了我們討論的內容，我也想請你想想，我要怎麼把記憶這套流程做成一個適合的流程？
+
+````markdown
+
+這部由「柚智夫妻 X 雷蒙三十」發布的《Codex 桌面版應用教學》影片，雖然是以介紹 OpenAI Codex 桌面版與 Claude Code 的比較為切入點，但其核心其實是在傳授一套**「如何管理並與 AI 代理（AI Agent）協作」的高階心法**。
+
+為您將影片中的實作細節抽絲剝繭，整理出以下 **6 個不論您使用哪一家 AI 供應商（Anthropic, OpenAI, Google 等）都完全適用的通用 Agent 協作概念**：
+
+### 1. 打造單一事實來源（SSOT），實現「跨平台無縫遷徙」
+在 AI Agent 時代，不要讓你的 AI 記憶或規範被綁死在單一工具裡。
+*   **概念應用：** 無論各家 AI 要求你建立什麼名稱的設定檔（例如 Claude 的 `CLAUDE.md`、Copilot/Codex 的 `AGENTS.md` 或 Gemini 的 `GEMINI.md`），你都應該建立一個獨立的「核心規則檔」（如 `CORE_RULES.md`），並讓所有工具的預設檔都透過「捷徑」或內部指令指向這份核心檔案。
+*   **效益：** 這體現了軟體工程中的「單一事實來源 (Single Source of Truth)」原則。只要更新一份文件，所有的 AI 助理都會同步獲得最新的知識與大腦，未來若要切換不同的 AI 工具，你的 Agent 也能帶著記憶無痛搬家。
+
+### 2. 「規劃」與「執行」必須分開不同的對話視窗
+不要在同一個對話框裡從頭聊到尾，這會導致上下文（Context）充滿雜訊，讓 AI 越聊越笨。
+*   **概念應用：** 
+    *   **第一階段（規劃）：** 開啟一個對話，向 AI 說明背景與目的，並透過來回討論，請 AI 輸出一份「規格書」或「任務清單（Spec / Plan）」，並存成本地檔案。
+    *   **第二階段（執行）：** **開啟一個全新的乾淨對話**，直接把剛剛那份文件的「絕對路徑」丟給 AI，並下達「執行」指令。
+*   **效益：** 這樣能確保 AI 在執行階段的上下文極度乾淨，不僅能大幅節省 Token 消耗，還能讓執行的準確率與成功率極大化。
+
+### 3. 主動的上下文（Context Window）管理與壓縮
+AI 的記憶容量（上下文視窗）是有限的，當記憶快滿時，AI 往往會開始遺忘先前的指令或發生幻覺。
+*   **概念應用：** 不要被動等待 AI 達到 100% 容量時才被迫自動壓縮。你應該養成習慣，時刻關注 Token 使用量（通常介面邊角會有一個圓環或百分比），**當容量達到約 80% 時，就手動輸入指令（如 `/compact` 或點擊壓縮按鈕）請 AI 總結並壓縮對話**。
+*   **效益：** 手動提前壓縮比滿載時的自動壓縮更穩定，能確保關鍵的決策脈絡不會在強迫清理時被意外丟失。
+
+### 4. 固化工作流：將成功經驗提煉為「專屬技能（Skill）」
+AI Agent 最強大的地方不在於它一開始有多聰明，而在於它能把「你的偏好」系統化。
+*   **概念應用：** 當你跟 AI 為了某個任務（如剪輯影片、寫特定風格的文案、重構程式碼）來回溝通修改，最後終於產出你非常滿意的結果時，**不要就這樣結束對話**。你應該下達指令：「請把我剛剛修正的地方與我的偏好收斂起來，寫成一份專屬的 Skill（技能文件）」。
+*   **效益：** 下次要做類似任務時，AI 只要讀取這份 Skill，就能直接產出符合你個人品味與標準的結果，不需再經歷重複的溝通與糾正。
+
+### 5. 減少抽象描述，給予「本地絕對路徑」精準定位
+當你要 AI 處理你電腦裡的檔案時，不要只給關鍵字讓它自己去整台電腦裡「大海撈針」。
+*   **概念應用：** 直接將檔案或資料夾拖拉進介面，或者直接貼上該檔案的**「絕對路徑」**（例如 `D:\Project\video_assets`）給 AI。
+*   **效益：** 因為 Agent 是在你電腦本地運作的，給予精確路徑能省去 AI 漫無目的搜尋的 Token 浪費，直接讓它對正確的檔案進行讀取或分類。
+
+### 6. 將「控制電腦螢幕（Computer Use）」視為最後手段
+雖然讓 AI 直接控制滑鼠、點擊介面（如自動幫你打遊戲、填表單）看起來非常炫酷，但在系統架構上這是成本最高的操作。
+*   **概念應用：** 在委派任務時，應遵循優先級：**API > CLI (終端機) > MCP 伺服器 > 瀏覽器/螢幕控制**。
+*   **效益：** 電腦視覺控制（Computer Use）極度消耗 Token 且速度較慢。只有當你要操作的軟體完全沒有 API、沒有命令列可以呼叫時，才應該使用螢幕控制作為「最後的自動化手段」，以此來保護你的錢包與使用額度。
+
+**總結來說：**
+這支影片傳達了一個核心理念——**使用 AI Agent，你不再是一個「許願者」，而是一個「架構師與經理人」**。無論工具如何更迭，掌握「切割任務、管理記憶邊界、建立標準作業流程（SOP 文件）」這些底層邏輯，你就能駕馭任何一家廠商推出的 AI 代理。
+
+````
