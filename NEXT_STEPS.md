@@ -1,10 +1,12 @@
 # NEXT_STEPS
 
-更新時間：2026-05-29 16:51
+更新時間：2026-06-06
 
 ## 下一步（立即行動）
 
+- [ ] 明天開機先讀 `AGENTS.md`、`AI_Workflow_OnePager.md`、`NEXT_STEPS.md`，再決定今天要跑的第一個任務 ⏰ 5m
 - [ ] 在 7N / 其他節點驗證 `D:\Project\Skills\federal-sync\scripts\sync_federation.ps1 -Mode Pull -Discover` 是否能穩定產出全域 safe pull 矩陣 ⏰ 20m
+- [ ] 用 `AI_Workflow_OnePager.md` 試跑 3 個真實場景：文件整理、Spectra/OpenSpec 開發、session log / NotebookLM 知識收割 ⏰ 45m
 - [ ] 釐清 `PJ-00_Chronicles` 的 `.openspec.yaml` / `openspec/` 與 `.spectra/` runtime cache 追蹤邊界 ⏰ 30m
 - [ ] 每次 session 結束後，將當天 `chat\yyyyMMdd_Twin-Sync_AI_Session.md` 與 `README.md` / `NEXT_STEPS.md` path-scoped stage、commit、push ⏰ 10m
 - [ ] `reports/` 目錄若要回歸使用，先重建目錄並同步更新 `README.md` Index ⏰ 20m
@@ -13,6 +15,8 @@
 
 | 更新時間 | 項目 | 摘要 |
 | --- | --- | --- |
+| 2026-06-06 | 開局入口補強 | 新增 `AGENTS.md`，把 `PJ-00_Chronicles` 的開機順序固定為 `AGENTS.md` -> `AI_Workflow_OnePager.md` -> `NEXT_STEPS.md`。 |
+| 2026-06-06 | 個人 AI 工作流程一頁入口建立 | 新增 `AI_Workflow_OnePager.md`，把 Start / Mission / Close / Evolve 固定為每日操作閉環，並校正 Twin-Sync 狀態機實體路徑。 |
 | 2026-05-29 16:51 | 下班前控制平面受水確認 | `PJ-14_Twin-Sync`（`e132911`）、`PJ-25_Nexus-Dashboard`、`Skills` 均為 clean，且 `ahead=0 / behind=0`；離場前法典狀態已收斂。 |
 | 2026-05-28 20:05 | `federal-sync` SSOT 收斂完成 | canonical script 回到 Skills skill folder，`PJ-00_Chronicles` heartbeat push lane 已改為 upstream-derived refspec。 |
 | 2026-05-28 17:16 | 聯邦文件治理與同步收口 | Twin-Sync 已受水到最新，PJ-00 `README.md` / `NEXT_STEPS.md` 完成 doc-regulation，並記錄 heartbeat push contract gap。 |

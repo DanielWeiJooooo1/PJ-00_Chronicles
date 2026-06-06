@@ -1,6 +1,6 @@
 # PJ-00 Chronicles
 
-最後更新：2026-05-29 16:51
+最後更新：2026-06-06
 
 ## Objective
 
@@ -10,12 +10,16 @@
 ## Topology
 
 - `chat/`：session log 與歷史紀錄。
+- `AI_Workflow_OnePager.md`：每日 AI 工作流程固定入口。
+- `AGENTS.md`：本 repo 的 AI 開局入口。
 - `README.md`：專案總覽。
 - `NEXT_STEPS.md`：立即行動與已完成事項。
 
 ## Index
 
-- 目前以 `chat/` 為主；`reports/` 已退場，需新報告時再重建。
+- 每日工作入口：[AI_Workflow_OnePager.md](./AI_Workflow_OnePager.md)。
+- AI 開局入口：[AGENTS.md](./AGENTS.md)。
+- Session 歷史以 `chat/` 為主；`reports/` 已退場，需新報告時再重建。
 
 ## Constraints
 
@@ -24,6 +28,12 @@
 - 報告輸出以主管可讀、可列印、可轉 PPT 為優先。
 
 ## Recent Notes
+
+### 2026-06-06
+
+- 新增 `AI_Workflow_OnePager.md`，將每日 Start / Mission / Close / Evolve 節奏定錨為 Chronicles 的 AI 工作流程入口。
+- 新增 `AGENTS.md` 作為 `PJ-00_Chronicles` 開局入口，讓工具先讀 one-pager 再進入任務。
+- 校正流程入口中的 Twin-Sync 實體路徑：目前狀態機應讀 `D:\Project\PJ-14_Twin-Sync\registry\state.yaml`。
 
 ### 2026-05-28 20:05
 
