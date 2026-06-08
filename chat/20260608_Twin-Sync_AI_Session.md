@@ -479,5 +479,51 @@
 ---
 
 ## 十、整體目標
+
 請將這份內容設計成一張**資訊完整、視覺整齊、可直接交付使用**的專案進度圖，而不是單純的文字排版圖。
 ````
+
+===========================================================================================
+
+# 16:36
+
+下午根據黑暗大的建議，安裝了 `Microsoft.Coreutils`，未來應該可以用 linux 相關的 bash 指令
+
+```powershell
+PS D:\Project\PJ-25_Nexus-Dashboard> winget install Microsoft.Coreutils   
+找到 Coreutils for Windows [Microsoft.Coreutils] 版本 2026.5.29
+此應用程式已由其擁有者授權給您。
+Microsoft 不負任何責任，也不會授與協力廠商封裝的任何授權。
+正在下載 https://github.com/microsoft/coreutils/releases/download/v2026.5.29/coreutils-2026.5.29-x64.exe
+  ██████████████████████████████  4.86 MB / 4.86 MB
+已成功驗證安裝程式雜湊
+正在啟動套件安裝...
+已成功安裝
+```
+
+透過 winget install Microsoft.Coreutils 安裝微軟官方的原生 Coreutils 最大好處是：無需啟動 WSL 或安裝第三方軟體（如 Git Bash），即可在 Windows 命令提示字元（CMD）與 PowerShell 中，直接使用超過 75 個最常用的 Linux 核心指令（如 ls、cp、rm、grep 等）。 [1, 2] 
+這項工具為開發者與系統管理者帶來以下核心優勢：
+
+* 命令跨平台統一：開發者可以使用與 Linux、macOS 完全相同的指令與參數（Flags），大幅減少腳本（Script）在不同作業系統間反覆修改的成本。 [2] 
+* 原生效能極佳：它並非透過虛擬化或輕量 Linux 核心來運作，而是 100% 的 Windows 原生應用程式。 [1] 
+* 極省磁碟空間：架構上採用了 NTFS 硬連結（Hardlinks）技術，70 多個指令其實全部指向同一個核心執行檔，因此佔用的硬碟空間微乎其微。 [2, 3] 
+* 安裝與維護簡單：透過內建的 [Windows 封裝管理員 (WinGet)](https://learn.microsoft.com/zh-tw/windows/package-manager/winget/) 一行指令即可完成安裝與自動更新。 [4, 5] 
+
+若您對於這項工具或 Windows 開發環境配置有興趣，可以進一步告訴我：
+
+* 您目前使用的是 Windows 10 還是 Windows 11？
+* 您希望了解這些指令與 原本 DOS/PowerShell 指令發生衝突時的解決方式 嗎？
+
+
+[1] [https://www.threads.com](https://www.threads.com/@hkepc/post/DZKxvq4mTDL/%E7%95%B6%E7%94%A8%E5%AE%B6%E9%80%8F%E9%81%8E-windows-%E7%9A%84%E8%BB%9F%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8winget%E8%BC%B8%E5%85%A5%E6%8C%87%E4%BB%A4-winget-install-microsoftcoreutils-%E5%AE%8C%E6%88%90%E5%AE%89%E8%A3%9D%E5%BE%8C%E7%B3%BB%E7%B5%B1%E4%BE%BF%E6%9C%83%E5%88%A9%E7%94%A8-nt/)
+[2] [https://cloud.tencent.com](https://cloud.tencent.com/developer/article/2682155)
+[3] [https://soft.china.com](https://soft.china.com/article/2682285.html)
+[4] [https://learn.microsoft.com](https://learn.microsoft.com/zh-tw/windows/package-manager/winget/)
+[5] [https://cyberq.tw](https://cyberq.tw/2026/06/05/coreutils-for-windows/)
+
+
+===========================================================================================
+
+# 16:44
+
+今天
