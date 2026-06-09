@@ -202,3 +202,152 @@ Ran command: `git push origin analyze-dp-toolkit-specs`
   ```
 
 未來若有遇到類似「有加入圖片或大檔案後，推送就突然卡住」的情形，通常都是這個快取設定造成的，直接執行步驟一的放大指令即可解決！
+
+===========================================================================================
+
+# 11:05
+
+底下是關於要給主管回覆訊息的回饋，請根據現有資訊，幫我進行有效的調整
+
+````markdown
+給主管的進度與狀態簡要說明
+
+**【本日成果：JSON 模式成功驗證，系統已具備無資料庫離線運行能力】**
+
+1. **JSON 轉換模式驗證成功**：
+   * 我們已成功使用機台測試資料（`ITEM61001_sample_100rows.csv`，共 100 筆資料）進行轉換測試。
+   * 成功產出符合 `DDL.md` 規格的 CVDA JSON 檔案，主表（GLS）產生 2 筆，細表（DTL）產生 100 筆。**數據對應無誤，去重邏輯完全正確**。
+2. **核心程式碼防錯升級**：
+   * 原先的程式碼強依賴 Oracle 資料庫連線，在離線或無資料庫環境下執行會崩潰。
+   * 我們已完成代碼升級，讓系統可根據配置（`UseDatabase: false`）自動切換至 **JSON 模式**，改將結果輸出為本地檔案，並能正常完成檔案搬移歸檔與 Checkpoint 流程。**目前程式已可在本地直接運行與測試**。
+3. **下一步開發方向（外賣客戶需求）**：
+   * **改為 API 串接**：開發 `HttpCvdaRepository`，將轉換出的 JSON 資料改以 HTTP POST 發送到外賣客戶的接收端 API（主線），並加上斷線快取自動重試機制。
+   * **安全防護與隔離**：建立 30 台機台白名單，合法機台放行，非白名單機台則將原始檔移到隔離區，不中斷系統運行。
+   * **無 UI 輕量化部署**：重構為無 UI 的 Windows 服務 (Worker Service)，並加入 License 授權綁定。
+
+預計的 API payload 形式如下
+
+轉換後的 JSON 將兩張表打包於單一檔案中，其格式可直接對應資料庫 insert 欄位或作為 HTTP POST Payload 的 API 格式：
+
+```json
+{
+  "mea_edc_tt6_cvda_gls": [
+    {
+      "GLS_ID": "925E0763002",
+      "LOT_ID": "925E0763.000",
+      "PROD_ID": "EgoFly",
+      "EQPT_ID": "ITCM6103",
+      "EC_CD": null,
+      "OWNER_CD": "PROD",
+      "RECIPE_ID": "1",
+      "OPRA_ID": "1234",
+      "CST_ID": "Console Job",
+      "TXN_DTTM": "2026/01/08 06:11:45",
+      "RGSTR_ID": "Console Job",
+      "DATA_DTTM": "2026/01/08 06:11:45",
+      "PLANT_LOC_ID": "TT6",
+      "LINE_EQPT_ID": "ITCM-61001",
+      "CHMBR_TXT": "00"
+    }
+  ],
+  "mea_edc_tt6_cvda_dtl": [
+    {
+      "GLS_ID": "925E0763002",
+      "EQPT_ID": "ITCM6103",
+      "TXN_DTTM": "2026/01/08 06:11:45",
+      "EDC_ITEM_ID": "ROLLER_SPEED_PV",
+      "EDC_TYPE_CD": "X",
+      "MEAS_VAL": 3
+    }
+  ]
+}
+```
+````
+不過我有一些回饋，可以再幫我調整一下內容嗎？
+
+- API 串接的 functino name 不應該寫死 CVDA `HttpCvdaRepository`，CVDA 只是三月份測試的機台資料 ITCM，然後 insert 到 FDA 的 DB Table CVDA 裡面，之後會有 10 種機型，共 30 個機台資料，所以寫死的話會讓人誤解。
+
+- 請問我們應該要先 archive `establish-dp-toolkit-fdc-ingestion-spec` 後再重新成立討論新的 change 嗎？
+
+===========================================================================================
+
+# 11:12
+
+這是一份根據您的回饋調整後的**主管進度報告**，以及針對 **Spectra 流程** 的建議說明：
+
+### 1. 調整後的【給主管的進度與狀態簡要說明】
+
+您可以直接將以下內容提供給主管回報進度：
+
+````markdown
+給主管的進度與狀態簡要說明
+
+**【本日成果：JSON 模式成功驗證，系統已具備無資料庫離線運行能力】**
+
+1. **JSON 轉換模式驗證成功**：
+   * 我們已成功使用機台測試資料（`ITEM61001_sample_100rows.csv`，共 100 筆資料）進行轉換測試。
+   * 成功產出符合 specs 規格的 JSON 檔案，主表（GLS 級別資料）產生 2 筆，細表（DTL 測項資料）產生 100 筆。**數據對應無誤，去重邏輯完全正確**。
+
+2. **核心程式碼防錯升級**：
+   * 原先的程式碼強依賴 Oracle 資料庫連線，在離線或無資料庫環境下執行會崩潰。
+   * 我們已完成代碼升級，讓系統可根據配置（`UseDatabase: false`）自動切換至 **JSON 模式**，改將結果輸出為本地檔案，並能正常完成檔案搬移歸檔與 Checkpoint 流程。**目前程式已可在本地直接運行與測試**。
+
+3. **下一步開發方向（外賣客戶需求）**：
+   * **通用 API 串接**：開發 **`HttpMachineDataRepository`（通用設備資料發送倉儲）**，將轉換後的通用 JSON 數據以 HTTP POST 方式發送到 FDC 的接收端 API。此設計採用通用架構，不綁定特定機型（如 CVDA 僅是 ITCM 機台對應的 DB 表），未來能動態適配外賣客戶 10 種機型與 30 台機台的 API Payload 結構。
+   * **安全防護與白名單過濾**：引入 30 台機台的白名單配置，合法機台自動放行處理，非白名單機台則安全隔離至本地的 `invalid logs` (或特定隔離資料夾)，不干擾主線運行。
+   * **無 UI 輕量化部署**：重構為無 UI 的 Windows 服務 (Worker Service)，並加入 License 授權驗證。
+
+---
+
+預計的 API Payload 形式（以本次驗證的 ITCM 機台為例，後續將動態適配 10 種機型結構）
+
+轉換後的 JSON 將資料打包於單一檔案中，其格式可直接作為 HTTP POST Payload 的 API 格式發送給接收端：
+
+```json
+{
+  "mea_edc_tt6_cvda_gls": [
+    {
+      "GLS_ID": "925E0763002",
+      "LOT_ID": "925E0763.000",
+      "PROD_ID": "EgoFly",
+      "EQPT_ID": "ITCM6103",
+      "EC_CD": null,
+      "OWNER_CD": "PROD",
+      "RECIPE_ID": "1",
+      "OPRA_ID": "1234",
+      "CST_ID": "Console Job",
+      "TXN_DTTM": "2026/01/08 06:11:45",
+      "RGSTR_ID": "Console Job",
+      "DATA_DTTM": "2026/01/08 06:11:45",
+      "PLANT_LOC_ID": "TT6",
+      "LINE_EQPT_ID": "ITCM-61001",
+      "CHMBR_TXT": "00"
+    }
+  ],
+  "mea_edc_tt6_cvda_dtl": [
+    {
+      "GLS_ID": "925E0763002",
+      "EQPT_ID": "ITCM6103",
+      "TXN_DTTM": "2026/01/08 06:11:45",
+      "EDC_ITEM_ID": "ROLLER_SPEED_PV",
+      "EDC_TYPE_CD": "X",
+      "MEAS_VAL": 3
+    }
+  ]
+}
+```
+````
+
+---
+
+### 2. 關於 Spectra 流程的建議
+
+> **結論：目前不需要先 archive 封存變更案，應該繼續在此 change 下開發。**
+
+**【分析原因】：**
+1. **當前的變更案合約已被刷新**：
+   在 Ingest 步驟 4 中，我們已經將「不提供 UI、白名單過濾、HTTP POST 串接」等規格合約刷新並寫入當前的 `establish-dp-toolkit-fdc-ingestion-spec` 變更案中了。這意味著**目前這個變更案尚未實作完成**（目前的任務狀態仍在進行中）。
+2. **Spectra 的生命週期 (SDD)**：
+   Spectra 的 `archive` 代表「實作已完成，將變更案正式封存」。如果現在將其 archive，等於是在程式碼尚未真正完成實作（API 串接、白名單過濾）前，就把提案關閉了。
+3. **正確的做法**：
+   我們應該**繼續維持在當前的 `establish-dp-toolkit-fdc-ingestion-spec` 變更案下**，使用 `/spectra-apply` 指令，逐步去實作剛才討論的 `HttpMachineDataRepository`、30 台白名單過濾等代碼。直到這些功能全部實作、測試通過且在本地跑通後，再使用 `/spectra-archive` 一起歸檔。
