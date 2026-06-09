@@ -174,3 +174,31 @@ Ran command: `git push origin analyze-dp-toolkit-specs`
    已推送到遠端分支：[DanielWeiJooooo1/PJ-26_DP-ToolKit](https://github.com/DanielWeiJooooo1/PJ-26_DP-ToolKit.git) 的 `analyze-dp-toolkit-specs` 分支。
 
 後續如果您要與主管報告時，可以直接展示本次 commit 與產出的 JSON 轉換成果。有任何進一步需要修改的項目，請隨時通知我！
+
+===========================================================================================
+
+# 10:44
+
+太棒了！很高興這個問題順利解決了。
+
+以下是這次 `git push` 卡住問題的原因與解決方法的整理，方便您未來參考或記錄在日誌中：
+
+### 1. 問題發生的原因
+* **包含二進位大檔案**：本次要推送的 Commit 中，包含了一張約 **4.6 MB** 的圖片檔案（`docs/specs/20260609_專案推進藍圖.png`）。
+* **Git 緩衝區限制 (HTTPS POST Buffer Limit)**：在 Windows 系統中使用 HTTPS 連線時，Git 預設的上傳快取區（`http.postBuffer`）設定過小。當推送的變更包含數 MB 以上的非文字檔案（如圖片、壓縮檔或 PDF）時，過小的緩衝區會導致 Git 無法順利打包上傳，進而**卡死在寫入物件（Writing objects）的階段**。這也是為什麼其他沒有大檔案的專案可以正常推送，唯獨這個專案卡住的原因。
+
+---
+
+### 2. 解決方法
+* **步驟一：調整全域 Git 上傳快取限制**
+  在終端機執行以下指令，將 `http.postBuffer` 放大至 **500 MB**，確保 Git 有足夠的記憶體緩衝來處理大檔案傳送：
+  ```bash
+  git config --global http.postBuffer 524288000
+  ```
+* **步驟二：重新執行推送**
+  設定完成後，重新執行推送，大檔案即可順利傳送至遠端倉庫：
+  ```bash
+  git push origin master
+  ```
+
+未來若有遇到類似「有加入圖片或大檔案後，推送就突然卡住」的情形，通常都是這個快取設定造成的，直接執行步驟一的放大指令即可解決！
